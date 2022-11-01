@@ -18,10 +18,10 @@ public class AImageProcessingModelTest {
 
   @Test
   public void testImageModelConstructor() {
-    IPixel black = new RGBPixel(0, 0, 0);
-    IPixel green = new RGBPixel(0, 255, 0);
-    IPixel red = new RGBPixel(255, 0, 0);
-    IPixel blue = new RGBPixel(0, 0, 255);
+    IPixel black = new RGBPixel(0, 0, 0, 255);
+    IPixel green = new RGBPixel(0, 255, 0, 255);
+    IPixel red = new RGBPixel(255, 0, 0, 255);
+    IPixel blue = new RGBPixel(0, 0, 255, 255);
 
     IPixel[][] pixels = new IPixel[2][2];
     pixels[0][0] = black;
@@ -50,10 +50,10 @@ public class AImageProcessingModelTest {
 
   @Test
   public void testImageModelConstructorFail() {
-    IPixel black = new RGBPixel(0, 0, 0);
-    IPixel green = new RGBPixel(0, 255, 0);
-    IPixel red = new RGBPixel(255, 0, 0);
-    IPixel blue = new RGBPixel(0, 0, 255);
+    IPixel black = new RGBPixel(0, 0, 0, 255);
+    IPixel green = new RGBPixel(0, 255, 0, 255);
+    IPixel red = new RGBPixel(255, 0, 0, 255);
+    IPixel blue = new RGBPixel(0, 0, 255, 255);
 
     IPixel[][] pixels = new IPixel[2][2];
     pixels[0][0] = black;
@@ -99,10 +99,10 @@ public class AImageProcessingModelTest {
 
   @Test
   public void testGetHeight() {
-    IPixel black = new RGBPixel(0, 0, 0);
-    IPixel green = new RGBPixel(0, 255, 0);
-    IPixel red = new RGBPixel(255, 0, 0);
-    IPixel blue = new RGBPixel(0, 0, 255);
+    IPixel black = new RGBPixel(0, 0, 0, 255);
+    IPixel green = new RGBPixel(0, 255, 0, 255);
+    IPixel red = new RGBPixel(255, 0, 0, 255);
+    IPixel blue = new RGBPixel(0, 0, 255, 255);
 
     IPixel[][] pixels = new IPixel[2][2];
     pixels[0][0] = black;
@@ -123,10 +123,10 @@ public class AImageProcessingModelTest {
 
   @Test
   public void testGetWidth() {
-    IPixel black = new RGBPixel(0, 0, 0);
-    IPixel green = new RGBPixel(0, 255, 0);
-    IPixel red = new RGBPixel(255, 0, 0);
-    IPixel blue = new RGBPixel(0, 0, 255);
+    IPixel black = new RGBPixel(0, 0, 0, 255);
+    IPixel green = new RGBPixel(0, 255, 0, 255);
+    IPixel red = new RGBPixel(255, 0, 0, 255);
+    IPixel blue = new RGBPixel(0, 0, 255, 255);
 
     IPixel[][] pixels = new IPixel[2][2];
     pixels[0][0] = black;

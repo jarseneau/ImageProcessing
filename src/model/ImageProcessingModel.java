@@ -20,6 +20,12 @@ public interface ImageProcessingModel {
   int getImageHeight();
 
   /**
+   * Adds a new pixel for the image at the specified row and column.
+   *
+   */
+  void addPixel();
+
+  /**
    * Get the pixel at the coordinates specified.
    *
    * @param row the row of the position sought, starting at 0

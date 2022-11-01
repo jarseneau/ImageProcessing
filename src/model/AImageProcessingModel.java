@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class AImageProcessingModel implements ImageProcessingModel {
@@ -8,6 +9,15 @@ public class AImageProcessingModel implements ImageProcessingModel {
   private final IPixel[][] pixels;
   private final int height;
   private final int width;
+
+  /**
+   * Constructs an image processing model that takes in the name of the file.
+   * @param imageName the name of the image to be created
+   */
+  public AImageProcessingModel(String imageName, int width, int height)
+          throws IllegalArgumentException {
+    this(imageName, new IPixel[height][width]);
+  }
 
   /**
    * Constructs an image processing model that takes in an array of pixels as
