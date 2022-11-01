@@ -5,6 +5,14 @@ package model;
  * on an image.
  */
 public interface ImageProcessingModel {
+
+  /**
+   * Return the name of this image.
+   *
+   * @return the name as a String
+   */
+  String getImageName();
+
   /**
    * Return the width of this image.
    *
@@ -18,12 +26,6 @@ public interface ImageProcessingModel {
    * @return the width as an integer
    */
   int getImageHeight();
-
-  /**
-   * Adds a new pixel for the image at the specified row and column.
-   *
-   */
-  void addPixel();
 
   /**
    * Get the pixel at the coordinates specified.
@@ -40,8 +42,9 @@ public interface ImageProcessingModel {
    * Changes the image with the specified image function.
    *
    * @param adjustor the alteration with which the image should be changed
+   * @param newName the new name of the created model
    * @return the model created from adjusting the given image
    * @throws IllegalArgumentException if the alteration does not exist
    */
-  ImageProcessingModel apply(IAdjustor adjustor);
+  ImageProcessingModel apply(String newName, IAdjustor adjustor);
 }
