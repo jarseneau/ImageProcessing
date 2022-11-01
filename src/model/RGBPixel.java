@@ -30,6 +30,9 @@ public class RGBPixel implements IPixel {
     this.channels.put("red", red);
     this.channels.put("green", green);
     this.channels.put("blue", blue);
+    this.channels.put("value", Math.max(Math.max(red, green), blue));
+    this.channels.put("intensity", (red + green + blue) / 3);
+    this.channels.put("luma", (int) (0.2126 * red + 0.7152 * green + 0.0722 * blue));
   }
 
   @Override

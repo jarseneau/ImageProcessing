@@ -9,7 +9,7 @@ public interface IAdjustor {
    * new model representing the result.
    *
    * @param m the model of the image being operated on
-   * @return a new image model representing the result of the operation
+   * @return the adjusted array of pixels resulting from the adjustment
    */
-  ImageProcessingModel apply(ImageProcessingModel m);
+  IPixel[][] adjust(ImageProcessingModel m);
 }

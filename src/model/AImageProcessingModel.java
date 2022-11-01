@@ -28,13 +28,18 @@ public class AImageProcessingModel implements ImageProcessingModel {
   public AImageProcessingModel(String imageName, IPixel[][] pixels) throws IllegalArgumentException {
     Objects.requireNonNull(imageName);
     Objects.requireNonNull(pixels);
-    if (pixels.length <= 0 || pixels[0].length <= 0) {
+    if (pixels.length == 0 || pixels[0].length == 0) {
       throw new IllegalArgumentException("Provided array cannot have a dimension of 0!");
     }
     this.imageName = imageName;
     this.pixels = pixels;
     this.width = pixels[0].length;
     this.height = pixels.length;
+  }
+
+  @Override
+  public String getImageName() {
+    return this.imageName;
   }
 
   @Override
@@ -56,7 +61,7 @@ public class AImageProcessingModel implements ImageProcessingModel {
   }
 
   @Override
-  public ImageProcessingModel apply(IAdjustor adjustor) {
-    return adjustor.apply(this);
+  public ImageProcessingModel apply(String newName, IAdjustor adjustor) {
+    return new AImageProcessingModel(newName, adjustor.adjust(this));
   }
 }
