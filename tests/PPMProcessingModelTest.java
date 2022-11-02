@@ -1,15 +1,9 @@
 import org.junit.Test;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 import model.ImageProcessingModel;
 import model.PPMProcessingModel;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 
 /**
@@ -19,22 +13,7 @@ public class PPMProcessingModelTest {
 
   @Test
   public void testConstructPPMImageModel() {
-    String testText = "P3\n" +
-            "2 2\n" +
-            "255\n" +
-            "0\n" +
-            "0\n" +
-            "0\n" +
-            "0\n" +
-            "255\n" +
-            "0\n" +
-            "255\n" +
-            "0\n" +
-            "0\n" +
-            "0\n" +
-            "0\n" +
-            "255\n";
-    ImageProcessingModel m = new PPMProcessingModel(testText);
+    ImageProcessingModel m = new PPMProcessingModel("tests/testFile.txt");
 
     assertEquals(0, m.getPixelAt(0, 0).getChannel("red"));
     assertEquals(0, m.getPixelAt(0, 0).getChannel("green"));

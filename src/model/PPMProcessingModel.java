@@ -1,5 +1,7 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,18 +11,44 @@ import java.util.Scanner;
 public class PPMProcessingModel extends AImageFromFileProcessing {
 
   /**
-   * Constructs a new PPMProcessingModel from the text of a PPM file
+   * Constructs a new PPMProcessingModel from the text of a PPM file.
    *
-   * @param fileText the text of the PPM file passed from the controller
+   * @param fileName the name of the ppm file passed from the controller
    * @throws NullPointerException if the filename is null
    */
-  public PPMProcessingModel(String fileText) {
-    super(fileText);
+  public PPMProcessingModel(String fileName) {
+    super(fileName);
+  }
+
+  /**
+   * Reads from the file and returns the raw text of the contents of the file.
+   *
+   * @param fileName the name of the file to be read from
+   * @return the raw text of the file as a String
+   * @throws IllegalArgumentException if the provided filename cannot be found
+   */
+  private String readFromFile(String fileName) throws IllegalArgumentException {
+    Scanner sc;
+    try {
+      sc = new Scanner(new FileInputStream(fileName));
+    }
+    catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("File " + fileName + " not found!");
+    }
+    StringBuilder builder = new StringBuilder();
+    //read the file line by line, and populate a string. This will throw away any comment lines
+    while (sc.hasNextLine()) {
+      String s = sc.nextLine();
+      if (s.charAt(0) != '#') {
+        builder.append(s + System.lineSeparator());
+      }
+    }
+    return builder.toString();
   }
 
   @Override
-  protected IPixel[][] loadFromFile(String fileText) throws IllegalArgumentException {
-    Scanner sc = new Scanner(fileText);
+  protected IPixel[][] loadFromFile(String fileName) throws IllegalArgumentException {
+    Scanner sc = new Scanner(this.readFromFile(fileName));
 
     String token;
 
@@ -51,8 +79,8 @@ public class PPMProcessingModel extends AImageFromFileProcessing {
   }
 
   @Override
-  protected int getMaxFromFile(String fileText) {
-    Scanner sc = new Scanner(fileText);
+  protected int getMaxFromFile(String fileName) {
+    Scanner sc = new Scanner(this.readFromFile(fileName));
 
     String token;
 

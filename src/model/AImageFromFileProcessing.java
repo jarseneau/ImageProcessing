@@ -1,31 +1,39 @@
 package model;
 
+/**
+ * To represent any image that is loaded directly from a file.
+ */
 public abstract class AImageFromFileProcessing implements ImageProcessingModel {
 
   private final EditorImageProcessingModel editor;
 
-  public AImageFromFileProcessing(String fileText) {
-    editor = new EditorImageProcessingModel(this.loadFromFile(fileText),
-            this.getMaxFromFile(fileText));
+  /**
+   * Constructs a new ImageProcessor from a given filename.
+   *
+   * @param fileName the name of the file that should be loaded
+   */
+  public AImageFromFileProcessing(String fileName) {
+    editor = new EditorImageProcessingModel(this.loadFromFile(fileName),
+            this.getMaxFromFile(fileName));
   }
 
   /**
-   * Reads the text from a file and converts it into a 2D array of pixels.
+   * Reads the text from a given file name and converts it into a 2D array of pixels.
    *
-   * @param fileText the text from the file
+   * @param fileName the name of the file being loaded
    * @return the image represented by a 2D array of pixels
    * @throws IllegalArgumentException if the format of the file is not correct
    */
-  abstract protected IPixel[][] loadFromFile(String fileText) throws IllegalArgumentException;
+  abstract protected IPixel[][] loadFromFile(String fileName) throws IllegalArgumentException;
 
   /**
-   * Reads the text from a file and finds the max value of the pixels inside the image.
+   * Reads the text from a given file name and finds the max value of the pixels inside the image.
    *
-   * @param fileText the text from the file
+   * @param fileName the name of the file being loaded
    * @return the max value of all pixels
    * @throws IllegalArgumentException if the format of the file is not correct
    */
-  abstract protected int getMaxFromFile(String fileText) throws IllegalArgumentException;
+  abstract protected int getMaxFromFile(String fileName) throws IllegalArgumentException;
 
 
   @Override

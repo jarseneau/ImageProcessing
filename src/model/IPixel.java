@@ -1,7 +1,5 @@
 package model;
 
-import java.util.HashMap;
-
 /**
  * This interface represents a pixel of any kind.
  */

@@ -4,11 +4,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import model.BrightenAdjustor;
+import model.FlipHorizontalAdjustor;
+import model.FlipVerticalAdjustor;
 import model.GrayscaleAdjustor;
 import model.ImageProcessingModel;
 import model.PPMProcessingModel;
 import view.ImageProcessingView;
 import view.PPMImageView;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 
 /**
@@ -18,26 +25,6 @@ public class PPMImageViewTest {
 
   @Test
   public void testSave() {
-    String testText = "P3\n" +
-            "2 2\n" +
-            "255\n" +
-            "0\n" +
-            "0\n" +
-            "0\n" +
-            "0\n" +
-            "255\n" +
-            "0\n" +
-            "255\n" +
-            "0\n" +
-            "0\n" +
-            "0\n" +
-            "0\n" +
-            "255\n";
-
-    ImageProcessingModel m = new PPMProcessingModel(testText);
-
-    ImageProcessingView v = new PPMImageView(m);
-
-    v.save("4pixels.ppm");
+    fail();
   }
 }

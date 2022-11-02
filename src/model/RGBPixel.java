@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * This class represents a pixel with 3 channels, one for red
@@ -39,7 +40,8 @@ public class RGBPixel implements IPixel {
   }
 
   @Override
-  public int getChannel(String channel) throws IllegalArgumentException {
+  public int getChannel(String channel) throws IllegalArgumentException, NullPointerException {
+    Objects.requireNonNull(channel);
     if (!this.channels.containsKey(channel)) {
       throw new IllegalArgumentException("Channel specified does not exist in this pixel.");
     }
@@ -47,7 +49,9 @@ public class RGBPixel implements IPixel {
   }
 
   @Override
-  public IPixel modifyChannel(String channelName, int val) throws IllegalArgumentException{
+  public IPixel modifyChannel(String channelName, int val)
+          throws IllegalArgumentException, NullPointerException {
+    Objects.requireNonNull(channelName);
     if (!this.channels.containsKey(channelName)) {
       throw new IllegalArgumentException("This channel does not exist in this pixel.");
     } else if (channelName.equals("value")
