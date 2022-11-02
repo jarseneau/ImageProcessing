@@ -71,7 +71,7 @@ public class PPMImageView implements ImageProcessingView {
   @Override
   public void renderMessage(String message) {
     try {
-      this.output.append(message);
+      this.output.append(message + System.lineSeparator());
     } catch (IOException e) {
       throw new IllegalStateException("Something went wrong while writing to appendable.");
     }
