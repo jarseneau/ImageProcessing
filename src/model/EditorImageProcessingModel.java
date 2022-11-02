@@ -1,45 +1,37 @@
 package model;
 
-import java.util.HashMap;
 import java.util.Objects;
 
-public class AImageProcessingModel implements ImageProcessingModel {
+/**
+ * To represent an image that has been created by editing an image
+ * using the image processing program.
+ */
+public class EditorImageProcessingModel implements ImageProcessingModel{
 
-  private final String imageName;
   private final IPixel[][] pixels;
+  private final int maxValue;
   private final int height;
   private final int width;
 
   /**
-   * Constructs an image processing model that takes in the name of the file.
-   * @param imageName the name of the image to be created
-   */
-  public AImageProcessingModel(String imageName, int width, int height)
-          throws IllegalArgumentException {
-    this(imageName, new IPixel[height][width]);
-  }
-
-  /**
    * Constructs an image processing model that takes in an array of pixels as
    * its parameter.
-   * @param imageName the name of the image to be created
    * @param pixels the given array of pixels to be used
+   * @throws NullPointerException if pixels is null
+   * @throws IllegalArgumentException if any dimension of pixels is 0
    */
-  public AImageProcessingModel(String imageName, IPixel[][] pixels) throws IllegalArgumentException {
-    Objects.requireNonNull(imageName);
+  public EditorImageProcessingModel(IPixel[][] pixels, int maxValue)
+          throws NullPointerException, IllegalArgumentException {
     Objects.requireNonNull(pixels);
     if (pixels.length == 0 || pixels[0].length == 0) {
       throw new IllegalArgumentException("Provided array cannot have a dimension of 0!");
+    } else if (maxValue < 0) {
+      throw new IllegalArgumentException("The provided max value cannot be negative.");
     }
-    this.imageName = imageName;
+    this.maxValue = maxValue;
     this.pixels = pixels;
     this.width = pixels[0].length;
     this.height = pixels.length;
-  }
-
-  @Override
-  public String getImageName() {
-    return this.imageName;
   }
 
   @Override
@@ -53,6 +45,11 @@ public class AImageProcessingModel implements ImageProcessingModel {
   }
 
   @Override
+  public int getMaxValue() {
+    return this.maxValue;
+  }
+
+  @Override
   public IPixel getPixelAt(int row, int col) throws IllegalArgumentException {
     if (row > this.height || col > this.width || row < 0 || col < 0) {
       throw new IllegalArgumentException("Row and col must be within bounds of the image.");
@@ -61,7 +58,7 @@ public class AImageProcessingModel implements ImageProcessingModel {
   }
 
   @Override
-  public ImageProcessingModel apply(String newName, IAdjustor adjustor) {
-    return new AImageProcessingModel(newName, adjustor.adjust(this));
+  public ImageProcessingModel apply(IImageAdjustor adjustor) {
+    return adjustor.adjust(this);
   }
 }

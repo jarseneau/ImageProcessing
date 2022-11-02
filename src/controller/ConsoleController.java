@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import model.AImageProcessingModel;
+import model.ImageProcessingModel;
 
 /**
  * This class represents the controller of a simple interactive image processor
@@ -19,7 +19,7 @@ public class ConsoleController implements ImageProcessingController{
 
   private Readable readable;
   private Appendable appendable;
-  private Map<String, AImageProcessingModel> images;
+  private Map<String, ImageProcessingModel> images;
 
   /**
    * Create a controller with an empty map of models, readable (to take inputs)
@@ -66,7 +66,7 @@ public class ConsoleController implements ImageProcessingController{
 
   }
 
-  private void processCommand(String userInstruction, Scanner sc, Map<String, AImageProcessingModel> images) {
+  private void processCommand(String userInstruction, Scanner sc, Map<String, ImageProcessingModel> images) {
   }
 
   private void farewellMessage() {

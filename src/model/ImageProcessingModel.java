@@ -7,13 +7,6 @@ package model;
 public interface ImageProcessingModel {
 
   /**
-   * Return the name of this image.
-   *
-   * @return the name as a String
-   */
-  String getImageName();
-
-  /**
    * Return the width of this image.
    *
    * @return the width as an integer
@@ -26,6 +19,13 @@ public interface ImageProcessingModel {
    * @return the width as an integer
    */
   int getImageHeight();
+
+  /**
+   * Return the maximum value this image's pixels can achieve.
+   *
+   * @return the maximum value this image's pixels can achieve as an integer
+   */
+  int getMaxValue();
 
   /**
    * Get the pixel at the coordinates specified.
@@ -42,9 +42,8 @@ public interface ImageProcessingModel {
    * Changes the image with the specified image function.
    *
    * @param adjustor the alteration with which the image should be changed
-   * @param newName the new name of the created model
    * @return the model created from adjusting the given image
    * @throws IllegalArgumentException if the alteration does not exist
    */
-  ImageProcessingModel apply(String newName, IAdjustor adjustor);
+  ImageProcessingModel apply(IImageAdjustor adjustor);
 }
