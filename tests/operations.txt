@@ -1,0 +1,7 @@
+load koalas/Koala.ppm koala
+brighten -40 koala darkKoala
+vertical-flip koala vFlipKoala
+save darkKoala.ppm darkKoala
+luma-component vFlipKoala vFlipKoala-luma
+save vFlipKoala-luma.ppm vFlipKoala-luma
+q
