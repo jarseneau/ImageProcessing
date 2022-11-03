@@ -13,7 +13,6 @@ import model.GrayscaleAdjustor;
 import model.ImageProcessingModel;
 import model.PPMProcessingModel;
 import view.ImageProcessingView;
-import view.PPMImageView;
 
 /**
  * This class represents the controller of a simple interactive image processor
@@ -50,24 +49,26 @@ public class ConsoleController implements ImageProcessingController{
 
   /**
    * The main method that relinquishes control of the application to the controller.
+   * once in control, valid commands are
    * @throws IllegalStateException if the controller is unable to transmit output.
    */
   @Override
   public void control() throws IllegalStateException {
     Scanner sc = new Scanner(readable);
     boolean quit = false;
-    
+
     //print the welcome message
     this.welcomeMessage();
 
     while (!quit && sc.hasNext()) {
-      writeMessage("Type intruction: "); //prompt for the instruction name
+      //writeMessage("Type intruction: "); //prompt for the instruction name
       String userInstruction = sc.next(); //take an instruction name
       if (userInstruction.equals("quit") || userInstruction.equals("q")) {
         quit = true;
-      }
-      else {
-        processCommand(userInstruction, sc, images);
+      } else if (userInstruction.equals("menu")) {
+        printMenu();
+      } else {
+        processCommand(userInstruction, sc);
       }
     }
 
@@ -76,30 +77,17 @@ public class ConsoleController implements ImageProcessingController{
 
   }
 
-  /**
-   * load image-path image-name: Load an image from the specified path and refer it to henceforth in the program by the given image name.
-   *
-   * save image-path image-name: Save the image with the given name to the specified path which should include the name of the file.
-   *
-   * red-component image-name dest-image-name: Create a greyscale image with the red-component of the image with the given name, and refer to it henceforth in the program by the given destination name. Similar commands for green, blue, value, luma, intensity components should be supported.
-   *
-   * horizontal-flip image-name dest-image-name: Flip an image horizontally to create a new image, referred to henceforth by the given destination name.
-   *
-   * vertical-flip image-name dest-image-name: Flip an image vertically to create a new image, referred to henceforth by the given destination name.
-   *
-   * brighten increment image-name dest-image-name: brighten the image by the given increment to create a new image, referred to henceforth by the given destination name. The increment may be positive (brightening) or negative (darkening)
-   * @param userInstruction
-   * @param sc
-   * @param images
-   */
-
-  private void processCommand(String userInstruction, Scanner sc, Map<String, ImageProcessingModel> images) {
+  // processes the given image command. If the command is not supported
+  private void processCommand(String userInstruction, Scanner sc) {
     String name1;
     String name2;
+    String response = "Successful!";
     if (userInstruction.contains("component")) {
       String component = userInstruction.substring(0,userInstruction.indexOf("-"));
       name1 = sc.next(); //name1 = image-name
       name2 = sc.next(); //name2 = dest-image-name
+      writeMessage("Gray-scaling " + name1 + " by its " + component + " component and storing as: "
+              + name2);
       tryGrayscale(name1, name2, component);
     }
 
@@ -109,11 +97,11 @@ public class ConsoleController implements ImageProcessingController{
           try {
             name1 = sc.next();
             name2 = sc.next();
-            //writeMessage("Loading image at " + name1 + " as " + name2 + System.lineSeparator()); in view?
+            writeMessage("Loading image at " + name1 + " as " + name2);
             ImageProcessingModel model = new PPMProcessingModel(name1);
             images.put(name2, model);
           } catch (IllegalArgumentException e) {
-            writeMessage(e.getMessage());
+            response = "Error: " + e.getMessage();
           }
           break;
 
@@ -122,12 +110,14 @@ public class ConsoleController implements ImageProcessingController{
             name1 = sc.next();
             name2 = sc.next();
             try {
+              writeMessage("Saving " + name2 + " to: " + name1);
               view.save(name1, images.get(name2));
+
             } catch (NullPointerException e) {
-              writeMessage("Image " + name1 + "not yet loaded");
+              response = "Error: image " + name1 + "not yet loaded";
             }
           } catch (IllegalArgumentException e) {
-            writeMessage(e.getMessage());
+            response = "Error " + e.getMessage();
           }
           break;
 
@@ -135,9 +125,10 @@ public class ConsoleController implements ImageProcessingController{
           name1 = sc.next(); //name1 = image-name
           name2 = sc.next(); //name2 = dest-image-name
           try {
-            images.put(name2, new FlipHorizontalAdjustor().adjust(images.get(name1)));
+            writeMessage("Flipping " + name1 + " horizontally and storing as: " + name2);
+            images.put(name2, images.get(name1).apply(new FlipHorizontalAdjustor()));
           } catch (NullPointerException e) {
-            writeMessage("Image " + name1 + " not yet loaded");
+            response = "Error: image " + name1 + " not yet loaded";
           }
           break;
 
@@ -145,9 +136,10 @@ public class ConsoleController implements ImageProcessingController{
           name1 = sc.next(); //name1 = image-name
           name2 = sc.next(); //name2 = dest-image-name
           try {
-            images.put(name2, new FlipVerticalAdjustor().adjust(images.get(name1)));
+            writeMessage("Flipping " + name1 + " vertically and storing as: " + name2);
+            images.put(name2, images.get(name1).apply(new FlipVerticalAdjustor()));
           } catch (NullPointerException e) {
-            writeMessage("Image " + name1 + " not yet loaded");
+            response = "Error: image " + name1 + " not yet loaded";
           }
           break;
 
@@ -155,28 +147,33 @@ public class ConsoleController implements ImageProcessingController{
           int increment;
           try {
             increment = sc.nextInt();
-          } catch (InputMismatchException e) {
-            throw new IllegalArgumentException("Brighten needs and integer");
+            name1 = sc.next(); //name1 = image-name
+            name2 = sc.next(); //name2 = dest-image-name
+            try {
+              writeMessage("Brightening " + name1 + " by " + increment + " and storing as: " + name2);
+              images.put(name2, images.get(name1).apply(new BrightenAdjustor(increment)));
+            } catch (NullPointerException e) {
+              response = "Error: image " + name1 + " not yet loaded";
+            }
           }
-          name1 = sc.next(); //name1 = image-name
-          name2 = sc.next(); //name2 = dest-image-name
-          try {
-            images.put(name2, new BrightenAdjustor(increment).adjust(images.get(name1)));
-          } catch (NullPointerException e) {
-            writeMessage("Image " + name1 + " not yet loaded");
+          catch (InputMismatchException e) {
+            response = "Error: brighten needs an integer increment";
+            sc.next();
+            sc.next();
           }
           break;
         default:
-          writeMessage("Command " + userInstruction + " not found.");
+          response = "Error: command " + userInstruction + " not found.";
       }
     }
+    writeMessage(response);
   }
 
-  // a method to grayscale by a given component
+  // a method to grayscale by a given component (red, green, blue, value, intensity, luma)
   private void tryGrayscale(String name1, String name2, String component) {
     try {
       //put new model into the images map.
-      images.put(name2, new GrayscaleAdjustor(component).adjust(images.get(name1)));
+      images.put(name2, images.get(name1).apply(new GrayscaleAdjustor(component)));
     }
     catch (NullPointerException e) {
       writeMessage("Image " + name1 + " not yet loaded");
@@ -186,12 +183,28 @@ public class ConsoleController implements ImageProcessingController{
     }
   }
 
+  //outputs the farewell message to the view
   private void farewellMessage() {
-
+    writeMessage("Have a nice day!");
   }
 
+  //outputs the welcome message to the view
   private void welcomeMessage() {
-    writeMessage("Welcome to ");
+    writeMessage("Welcome to the Image Processing program");
+    printMenu();
+  }
+
+  // outputs the menu of all operations into the view
+  private void printMenu() {
+    writeMessage("Supported operations are:");
+    writeMessage("\tload image-path image-name");
+    writeMessage("\tsave image-path image-name");
+    writeMessage("\tred-component image-path image-name " +
+            "(same for green, blue, value, luma and intensity)");
+    writeMessage("\thorizontal-flip image-path image-name");
+    writeMessage("\tvertical-flip image-path image-name");
+    writeMessage("\"q\" or \"quit\" to quit");
+    writeMessage("\"menu\" to see this menu again");
   }
 
   // sends messages to view, handles errors.
