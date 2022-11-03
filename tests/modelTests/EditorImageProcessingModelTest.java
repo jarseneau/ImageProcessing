@@ -54,16 +54,6 @@ public class EditorImageProcessingModelTest {
 
   @Test
   public void testImageModelConstructorFail() {
-    IPixel black = new RGBPixel(0, 0, 0, 255);
-    IPixel green = new RGBPixel(0, 255, 0, 255);
-    IPixel red = new RGBPixel(255, 0, 0, 255);
-    IPixel blue = new RGBPixel(0, 0, 255, 255);
-
-    IPixel[][] pixels = new IPixel[2][2];
-    pixels[0][0] = black;
-    pixels[0][1] = green;
-    pixels[1][0] = red;
-    pixels[1][1] = blue;
     try {
       ImageProcessingModel m = new EditorImageProcessingModel(null, 255);
       fail();
@@ -211,6 +201,13 @@ public class EditorImageProcessingModelTest {
     } catch (IllegalArgumentException e) {
       assertEquals("Row and col must be within bounds of the image.", e.getMessage());
     }
+
+    try {
+      m.getPixelAt(-2, 7);
+      fail();
+    } catch (IllegalArgumentException e) {
+      assertEquals("Row and col must be within bounds of the image.", e.getMessage());
+    }
   }
 
   @Test
@@ -295,5 +292,30 @@ public class EditorImageProcessingModelTest {
     assertEquals(0, m7.getPixelAt(1, 1).getChannel("red"));
     assertEquals(0, m7.getPixelAt(1, 1).getChannel("green"));
     assertEquals(0, m7.getPixelAt(1, 1).getChannel("blue"));
+  }
+
+  @Test
+  public void testNullApply() {
+    IPixel black = new RGBPixel(0, 0, 0, 255);
+    IPixel green = new RGBPixel(0, 255, 0, 255);
+    IPixel red = new RGBPixel(255, 0, 0, 255);
+    IPixel blue = new RGBPixel(0, 0, 255, 255);
+
+    IPixel[][] pixels = new IPixel[2][2];
+    pixels[0][0] = black;
+    pixels[0][1] = green;
+    pixels[1][0] = red;
+    pixels[1][1] = blue;
+
+    ImageProcessingModel m = new EditorImageProcessingModel(pixels, 255);
+
+    ImageProcessingModel m2;
+
+    try {
+      m2 = m.apply(null);
+      fail();
+    } catch (NullPointerException e) {
+      assertNull(e.getMessage());
+    }
   }
 }

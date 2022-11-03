@@ -57,7 +57,7 @@ public abstract class AImageFromFileProcessing implements ImageProcessingModel {
   }
 
   @Override
-  public ImageProcessingModel apply(IImageAdjustor adjustor) {
+  public ImageProcessingModel apply(IImageAdjustor adjustor) throws NullPointerException {
     return editor.apply(adjustor);
   }
 }

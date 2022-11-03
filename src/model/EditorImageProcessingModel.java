@@ -58,7 +58,9 @@ public class EditorImageProcessingModel implements ImageProcessingModel{
   }
 
   @Override
-  public ImageProcessingModel apply(IImageAdjustor adjustor) {
+  public ImageProcessingModel apply(IImageAdjustor adjustor) throws IllegalArgumentException,
+          NullPointerException {
+    Objects.requireNonNull(adjustor);
     return adjustor.adjust(this);
   }
 }

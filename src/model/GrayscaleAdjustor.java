@@ -32,9 +32,12 @@ public class GrayscaleAdjustor implements IImageAdjustor {
    * @return a new ImageProcessingModel made from the grayscale pixels
    * @throws IllegalArgumentException if the component that is passed in is not contained
    * within the pixel
+   * @throws NullPointerException if the model provided is null
    */
   @Override
-  public ImageProcessingModel adjust(ImageProcessingModel m) throws IllegalArgumentException {
+  public ImageProcessingModel adjust(ImageProcessingModel m) throws IllegalArgumentException,
+          NullPointerException {
+    Objects.requireNonNull(m);
     IPixel[][] grayscaled = new IPixel[m.getImageHeight()][m.getImageWidth()];
     for (int row = 0; row < m.getImageHeight(); row++ ) {
       for (int col = 0; col < m.getImageWidth(); col++ ) {

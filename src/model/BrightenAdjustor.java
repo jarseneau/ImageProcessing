@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * This class represents an adjustor on an image that brightens every
  * pixel by a value given by the constructor
@@ -24,9 +26,11 @@ public class BrightenAdjustor implements IImageAdjustor {
    *
    * @param m the model of the image being operated on
    * @return the given image brightened or darkened by the specified amount.
+   * @throws NullPointerException if the model provided is null
    */
   @Override
-  public ImageProcessingModel adjust(ImageProcessingModel m) {
+  public ImageProcessingModel adjust(ImageProcessingModel m) throws NullPointerException {
+    Objects.requireNonNull(m);
     IPixel[][] brightened = new IPixel[m.getImageHeight()][m.getImageWidth()];
     for (int row = 0; row < m.getImageHeight(); row++ ) {
       for (int col = 0; col < m.getImageWidth(); col++ ) {
