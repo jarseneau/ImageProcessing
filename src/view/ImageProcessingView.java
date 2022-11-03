@@ -15,7 +15,8 @@ public interface ImageProcessingView {
    * @param model the model that is to be saved
    * @throws IllegalStateException if writing to the file fails
    */
-  void save(String filename, ImageProcessingModel model) throws IllegalStateException;
+  void save(String filename, ImageProcessingModel model) throws IllegalStateException,
+          NullPointerException;
 
   /**
    * Renders the given message to the view.
@@ -23,5 +24,5 @@ public interface ImageProcessingView {
    * @param message the message to render as a string
    * @throws IllegalStateException if writing to view fails
    */
-  void renderMessage(String message);
+  void renderMessage(String message) throws NullPointerException;
 }

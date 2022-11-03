@@ -34,20 +34,32 @@ public class PPMImageView implements ImageProcessingView {
    *
    * @param model the model which should be converted
    * @return the PPM text as a string
+   * @throws IllegalArgumentException if the pixels in the model do not have the correct
+   * channel
    */
-  private String ppmToString(ImageProcessingModel model) {
+  private String ppmToString(ImageProcessingModel model) throws IllegalArgumentException {
     StringBuilder builder = new StringBuilder();
-    builder.append("P3\n");
-    builder.append(model.getImageWidth() + " " + model.getImageHeight() + "\n");
-    builder.append(model.getMaxValue() + "\n");
-    for (int row = 0; row < model.getImageHeight(); row++ ) {
-      for (int col = 0; col < model.getImageWidth(); col++ ) {
-        builder.append(model.getPixelAt(row, col).getChannel("red") + "\n");
-        builder.append(model.getPixelAt(row, col).getChannel("green") + "\n");
-        builder.append(model.getPixelAt(row, col).getChannel("blue") + "\n");
+    builder.append("P3" + System.lineSeparator());
+    builder.append(model.getImageWidth() + " " + model.getImageHeight() +
+            System.lineSeparator());
+    builder.append(model.getMaxValue() +
+            System.lineSeparator());
+    try {
+      for (int row = 0; row < model.getImageHeight(); row++) {
+        for (int col = 0; col < model.getImageWidth(); col++) {
+          builder.append(model.getPixelAt(row, col).getChannel("red") +
+                  System.lineSeparator());
+          builder.append(model.getPixelAt(row, col).getChannel("green") +
+                  System.lineSeparator());
+          builder.append(model.getPixelAt(row, col).getChannel("blue") +
+                  System.lineSeparator());
+        }
       }
+      return builder.toString();
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException(
+              "You cannot save to a PPM file if your pixels are not RGB!");
     }
-    return builder.toString();
   }
 
   /**
@@ -59,7 +71,16 @@ public class PPMImageView implements ImageProcessingView {
    */
   @Override
   public void save(String filename, ImageProcessingModel model) throws IllegalStateException {
+    Objects.requireNonNull(filename);
     try {
+      if (filename.length() < 3
+              || !"ppm".equals(filename.substring(filename.length() - 3))) {
+        filename = filename + ".ppm";
+      }
+      if (filename.equals(".ppm") ||
+              filename.charAt(filename.lastIndexOf('/') + 1)  == '.') {
+        throw new IllegalArgumentException("Invalid filename.");
+      }
       FileWriter myWriter = new FileWriter(filename);
       myWriter.write(this.ppmToString(model));
       myWriter.close();
@@ -69,7 +90,8 @@ public class PPMImageView implements ImageProcessingView {
   }
 
   @Override
-  public void renderMessage(String message) {
+  public void renderMessage(String message) throws NullPointerException {
+    Objects.requireNonNull(message);
     try {
       this.output.append(message + System.lineSeparator());
     } catch (IOException e) {
