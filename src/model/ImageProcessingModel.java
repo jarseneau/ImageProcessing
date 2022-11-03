@@ -43,7 +43,7 @@ public interface ImageProcessingModel {
    *
    * @param adjustor the alteration with which the image should be changed
    * @return the model created from adjusting the given image
-   * @throws IllegalArgumentException if the alteration does not exist
+   * @throws NullPointerException if the given adjustor is null
    */
-  ImageProcessingModel apply(IImageAdjustor adjustor);
+  ImageProcessingModel apply(IImageAdjustor adjustor) throws NullPointerException;
 }

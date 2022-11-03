@@ -94,6 +94,16 @@ public class TestAdjustors {
   }
 
   @Test
+  public void testFlipHorizontalNull() {
+    try {
+      new FlipHorizontalAdjustor().adjust(null);
+      fail();
+    } catch (NullPointerException e) {
+      assertNull(e.getMessage());
+    }
+  }
+
+  @Test
   public void testFlipVerticalApply() {
     IPixel black = new RGBPixel(0, 0, 0, 255);
     IPixel green = new RGBPixel(0, 255, 0, 255);
@@ -156,6 +166,16 @@ public class TestAdjustors {
   }
 
   @Test
+  public void testFlipVerticalNull() {
+    try {
+      new FlipVerticalAdjustor().adjust(null);
+      fail();
+    } catch (NullPointerException e) {
+      assertNull(e.getMessage());
+    }
+  }
+
+  @Test
   public void testBrightenAdjustor() {
     IPixel gray = new RGBPixel(10, 10, 10, 255);
     IPixel green = new RGBPixel(0, 245, 0, 255);
@@ -204,6 +224,16 @@ public class TestAdjustors {
     assertEquals(0, m3.getPixelAt(1, 1).getChannel("red"));
     assertEquals(0, m3.getPixelAt(1, 1).getChannel("green"));
     assertEquals(225, m3.getPixelAt(1, 1).getChannel("blue"));
+  }
+
+  @Test
+  public void testBrightenerNull() {
+    try {
+      new BrightenAdjustor(10).adjust(null);
+      fail();
+    } catch (NullPointerException e) {
+      assertNull(e.getMessage());
+    }
   }
 
   @Test
@@ -491,6 +521,16 @@ public class TestAdjustors {
       fail();
     } catch (IllegalArgumentException e) {
       assertEquals("Channel specified does not exist in this pixel.", e.getMessage());
+    }
+  }
+
+  @Test
+  public void testGrayscaleNull() {
+    try {
+      new GrayscaleAdjustor("red").adjust(null);
+      fail();
+    } catch (NullPointerException e) {
+      assertNull(e.getMessage());
     }
   }
 }

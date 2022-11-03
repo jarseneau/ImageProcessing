@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * This class represents an adjustor on an image that flips
  * the image horizontally, or across the y-axis.
@@ -13,9 +15,11 @@ public class FlipHorizontalAdjustor implements IImageAdjustor {
    *
    * @param m the model of the image being operated on
    * @return the given image flipped across the y-axis
+   * @throws NullPointerException if the model provided is null
    */
   @Override
-  public ImageProcessingModel adjust(ImageProcessingModel m) {
+  public ImageProcessingModel adjust(ImageProcessingModel m) throws NullPointerException {
+    Objects.requireNonNull(m);
     IPixel[][] flipped = new IPixel[m.getImageHeight()][m.getImageWidth()];
     for (int row = 0; row < m.getImageHeight(); row++) {
       for (int col = 0; col < m.getImageWidth(); col++) {
