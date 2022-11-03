@@ -96,7 +96,6 @@ public class ConsoleController implements ImageProcessingController{
   private void processCommand(String userInstruction, Scanner sc, Map<String, ImageProcessingModel> images) {
     String name1;
     String name2;
-
     if (userInstruction.contains("component")) {
       String component = userInstruction.substring(0,userInstruction.indexOf("-"));
       name1 = sc.next(); //name1 = image-name
@@ -104,76 +103,72 @@ public class ConsoleController implements ImageProcessingController{
       tryGrayscale(name1, name2, component);
     }
 
-    switch (userInstruction) {
-      case "load": //load given image path
-        try {
-          name1 = sc.next();
-          name2 = sc.next();
-          //writeMessage("Loading image at " + name1 + " as " + name2 + System.lineSeparator()); in view?
-          ImageProcessingModel model = new PPMProcessingModel(name1);
-          images.put(name2, model);
-        }
-        catch (IllegalArgumentException e) {
-          writeMessage(e.getMessage());
-        }
-        break;
-
-      case "save": // name1 = filepath, name2 = image-name
-        try {
-          name1 = sc.next();
-          name2 = sc.next();
+    else {
+      switch (userInstruction) {
+        case "load": //load given image path
           try {
-            view.save(name1, images.get(name2));
+            name1 = sc.next();
+            name2 = sc.next();
+            //writeMessage("Loading image at " + name1 + " as " + name2 + System.lineSeparator()); in view?
+            ImageProcessingModel model = new PPMProcessingModel(name1);
+            images.put(name2, model);
+          } catch (IllegalArgumentException e) {
+            writeMessage(e.getMessage());
           }
-          catch (NullPointerException e) {
-            writeMessage("Image " + name1 + "not yet loaded");
+          break;
+
+        case "save": // name1 = filepath, name2 = image-name
+          try {
+            name1 = sc.next();
+            name2 = sc.next();
+            try {
+              view.save(name1, images.get(name2));
+            } catch (NullPointerException e) {
+              writeMessage("Image " + name1 + "not yet loaded");
+            }
+          } catch (IllegalArgumentException e) {
+            writeMessage(e.getMessage());
           }
-        }
-        catch (IllegalArgumentException e) {
-          writeMessage(e.getMessage());
-        }
-        break;
+          break;
 
-      case "horizontal-flip":
-        name1 = sc.next(); //name1 = image-name
-        name2 = sc.next(); //name2 = dest-image-name
-        try {
-          images.put(name2, new FlipHorizontalAdjustor().adjust(images.get(name1)));
-        }
-        catch (NullPointerException e) {
-          writeMessage("Image " + name1 + " not yet loaded");
-        }
-        break;
+        case "horizontal-flip":
+          name1 = sc.next(); //name1 = image-name
+          name2 = sc.next(); //name2 = dest-image-name
+          try {
+            images.put(name2, new FlipHorizontalAdjustor().adjust(images.get(name1)));
+          } catch (NullPointerException e) {
+            writeMessage("Image " + name1 + " not yet loaded");
+          }
+          break;
 
-      case "vertical-flip":
-        name1 = sc.next(); //name1 = image-name
-        name2 = sc.next(); //name2 = dest-image-name
-        try {
-          images.put(name2, new FlipVerticalAdjustor().adjust(images.get(name1)));
-        }
-        catch (NullPointerException e) {
-          writeMessage("Image " + name1 + " not yet loaded");
-        }
-        break;
+        case "vertical-flip":
+          name1 = sc.next(); //name1 = image-name
+          name2 = sc.next(); //name2 = dest-image-name
+          try {
+            images.put(name2, new FlipVerticalAdjustor().adjust(images.get(name1)));
+          } catch (NullPointerException e) {
+            writeMessage("Image " + name1 + " not yet loaded");
+          }
+          break;
 
-      case "brighten":
-        int increment;
-        try {
-          increment = sc.nextInt();
-        }
-        catch (InputMismatchException e) {
-          throw new IllegalArgumentException("Brighten needs and integer");
-        }
-        name1 = sc.next(); //name1 = image-name
-        name2 = sc.next(); //name2 = dest-image-name
-        try {
-          images.put(name2, new BrightenAdjustor(increment).adjust(images.get(name1)));
-        }
-        catch (NullPointerException e) {
-          writeMessage("Image " + name1 + " not yet loaded");
-        }
-      default:
-        writeMessage("Command, " + userInstruction + " not found.");
+        case "brighten":
+          int increment;
+          try {
+            increment = sc.nextInt();
+          } catch (InputMismatchException e) {
+            throw new IllegalArgumentException("Brighten needs and integer");
+          }
+          name1 = sc.next(); //name1 = image-name
+          name2 = sc.next(); //name2 = dest-image-name
+          try {
+            images.put(name2, new BrightenAdjustor(increment).adjust(images.get(name1)));
+          } catch (NullPointerException e) {
+            writeMessage("Image " + name1 + " not yet loaded");
+          }
+          break;
+        default:
+          writeMessage("Command " + userInstruction + " not found.");
+      }
     }
   }
 
@@ -185,6 +180,9 @@ public class ConsoleController implements ImageProcessingController{
     }
     catch (NullPointerException e) {
       writeMessage("Image " + name1 + " not yet loaded");
+    }
+    catch (IllegalArgumentException e) {
+      writeMessage("Error: " + e.getMessage());
     }
   }
 
