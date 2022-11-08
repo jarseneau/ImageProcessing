@@ -34,7 +34,7 @@ public class BrightenAdjustor implements IImageAdjustor {
     IPixel[][] brightened = new IPixel[m.getImageHeight()][m.getImageWidth()];
     for (int row = 0; row < m.getImageHeight(); row++ ) {
       for (int col = 0; col < m.getImageWidth(); col++ ) {
-        brightened[row][col] = m.getPixelAt(row, col).modifyAll(this.scalar);
+        brightened[row][col] = m.getPixelAt(row, col).addAll(this.scalar);
       }
     }
     return new EditorImageProcessingModel(brightened, m.getMaxValue());

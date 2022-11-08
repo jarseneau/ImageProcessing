@@ -516,7 +516,7 @@ public class TestAdjustors {
       pixels[1][0] = red;
       pixels[1][1] = blue;
       ImageProcessingModel m = new EditorImageProcessingModel(pixels, 255);
-      ImageProcessingModel m2 = m.apply(new GrayscaleAdjustor("alpha"));
+      ImageProcessingModel m2 = m.apply(new GrayscaleAdjustor("hot dog"));
       fail();
     } catch (IllegalArgumentException e) {
       assertEquals("Channel specified does not exist in this pixel.", e.getMessage());

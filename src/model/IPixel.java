@@ -26,11 +26,18 @@ public interface IPixel {
   IPixel modifyChannel(String channelName, int val) throws IllegalArgumentException;
 
   /**
+   * Returns a list of the channels of a pixel that are not statistics.
+   *
+   * @return the main channels of the pixel as an array of strings
+   */
+  String[] getMainChannels();
+
+  /**
    * Returns a new pixel with the specified value added to every
    * pixel channel that isn't a statistic.
    *
    * @param val the value to be added to all channels
    * @return the new pixel resulting from the modification
    */
-  IPixel modifyAll(int val);
+  IPixel addAll(int val);
 }
