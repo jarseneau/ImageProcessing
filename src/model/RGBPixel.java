@@ -25,7 +25,7 @@ public class RGBPixel implements IPixel {
    */
   public RGBPixel(int red, int green, int blue, int maxValue) throws IllegalArgumentException {
     if (maxValue <= 0
-            ||red < 0 || green < 0 || blue < 0
+            || red < 0 || green < 0 || blue < 0
             || red > maxValue || green > maxValue || blue > maxValue) {
       throw new IllegalArgumentException("Invalid max value or pixel channel values.");
     }

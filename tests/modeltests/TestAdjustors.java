@@ -1,4 +1,4 @@
-package modelTests;
+package modeltests;
 
 import org.junit.Test;
 
@@ -16,15 +16,16 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 /**
- * To represent tests on a FlipHorizontalAdjustor
+ * To represent tests on a FlipHorizontalAdjustor.
  */
 public class TestAdjustors {
 
   /**
-   * Helper method to get the luma of red green and blue
-   * @param red the red value
+   * Helper method to get the luma of red green and blue.
+   *
+   * @param red   the red value
    * @param green the green value
-   * @param blue the blue value
+   * @param blue  the blue value
    * @return the luma of these three values
    */
   public int getLuma(int red, int green, int blue) {
@@ -292,9 +293,9 @@ public class TestAdjustors {
 
     ImageProcessingModel m1 = m.apply(new GrayscaleAdjustor("red"));
 
-    for (int row = 0; row < m1.getImageHeight(); row++ ) {
-      for (int col = 0; col < m1.getImageWidth(); col++ ) {
-        for (String channel: channels) {
+    for (int row = 0; row < m1.getImageHeight(); row++) {
+      for (int col = 0; col < m1.getImageWidth(); col++) {
+        for (String channel : channels) {
           assertEquals(pixels2[row][col].getChannel(channel),
                   m1.getPixelAt(row, col).getChannel(channel));
         }
@@ -323,9 +324,9 @@ public class TestAdjustors {
 
     ImageProcessingModel m2 = m.apply(new GrayscaleAdjustor("green"));
 
-    for (int row = 0; row < m2.getImageHeight(); row++ ) {
-      for (int col = 0; col < m2.getImageWidth(); col++ ) {
-        for (String channel: channels) {
+    for (int row = 0; row < m2.getImageHeight(); row++) {
+      for (int col = 0; col < m2.getImageWidth(); col++) {
+        for (String channel : channels) {
           assertEquals(pixels2[row][col].getChannel(channel),
                   m2.getPixelAt(row, col).getChannel(channel));
         }
@@ -354,9 +355,9 @@ public class TestAdjustors {
 
     ImageProcessingModel m3 = m.apply(new GrayscaleAdjustor("blue"));
 
-    for (int row = 0; row < m3.getImageHeight(); row++ ) {
-      for (int col = 0; col < m3.getImageWidth(); col++ ) {
-        for (String channel: channels) {
+    for (int row = 0; row < m3.getImageHeight(); row++) {
+      for (int col = 0; col < m3.getImageWidth(); col++) {
+        for (String channel : channels) {
           assertEquals(pixels2[row][col].getChannel(channel),
                   m3.getPixelAt(row, col).getChannel(channel));
         }
@@ -385,24 +386,24 @@ public class TestAdjustors {
 
     ImageProcessingModel m4 = m.apply(new GrayscaleAdjustor("value"));
 
-    for (int row = 0; row < m4.getImageHeight(); row++ ) {
-      for (int col = 0; col < m4.getImageWidth(); col++ ) {
-        for (String channel: channels) {
+    for (int row = 0; row < m4.getImageHeight(); row++) {
+      for (int col = 0; col < m4.getImageWidth(); col++) {
+        for (String channel : channels) {
           assertEquals(pixels2[row][col].getChannel(channel),
                   m4.getPixelAt(row, col).getChannel(channel));
         }
       }
     }
 
-     black = new RGBPixel(0, 0, 0, 255);
-     green = new RGBPixel(85, 85, 85, 255);
-     white = new RGBPixel(255, 255, 255, 255);
-     red = new RGBPixel(85, 85, 85, 255);
-     blue = new RGBPixel(85, 85, 85, 255);
-     purple = new RGBPixel(170, 170, 170, 255);
-     yellow = new RGBPixel(170, 170, 170, 255);
-     teal = new RGBPixel(170, 170, 170, 255);
-     gray = new RGBPixel(100, 100, 100, 255);
+    black = new RGBPixel(0, 0, 0, 255);
+    green = new RGBPixel(85, 85, 85, 255);
+    white = new RGBPixel(255, 255, 255, 255);
+    red = new RGBPixel(85, 85, 85, 255);
+    blue = new RGBPixel(85, 85, 85, 255);
+    purple = new RGBPixel(170, 170, 170, 255);
+    yellow = new RGBPixel(170, 170, 170, 255);
+    teal = new RGBPixel(170, 170, 170, 255);
+    gray = new RGBPixel(100, 100, 100, 255);
 
     pixels2[0][0] = black;
     pixels2[0][1] = green;
@@ -416,48 +417,46 @@ public class TestAdjustors {
 
     ImageProcessingModel m5 = m.apply(new GrayscaleAdjustor("intensity"));
 
-    for (int row = 0; row < m5.getImageHeight(); row++ ) {
-      for (int col = 0; col < m5.getImageWidth(); col++ ) {
-        for (String channel: channels) {
+    for (int row = 0; row < m5.getImageHeight(); row++) {
+      for (int col = 0; col < m5.getImageWidth(); col++) {
+        for (String channel : channels) {
           assertEquals(pixels2[row][col].getChannel(channel),
                   m5.getPixelAt(row, col).getChannel(channel));
         }
       }
     }
 
-     black = new RGBPixel(this.getLuma(0, 0, 0),
-             this.getLuma(0, 0, 0),
-             this.getLuma(0, 0, 0),
-             255);
-     green = new RGBPixel(this.getLuma(0, 255, 0),
-             this.getLuma(0, 255, 0),
-             this.getLuma(0, 255, 0),
-             255);
-     white = new RGBPixel(255, 255, 255, 255);
-     red = new RGBPixel(this.getLuma(255, 0, 0),
-             this.getLuma(255, 0, 0),
-             this.getLuma(255, 0, 0),
-             255);
-     blue = new RGBPixel(this.getLuma(0, 0, 255),
-             this.getLuma(0, 0, 255),
-             this.getLuma(0, 0, 255),
-             255);
-     purple = new RGBPixel(this.getLuma(255, 0, 255),
-             this.getLuma(255, 0, 255),
-             this.getLuma(255, 0, 255),
-             255);
-     yellow = new RGBPixel(this.getLuma(255, 255, 0),
-             this.getLuma(255, 255, 0),
-             this.getLuma(255, 255, 0),
-             255);
-     teal = new RGBPixel(this.getLuma(0, 255, 255),
-             this.getLuma(0, 255, 255),
-             this.getLuma(0, 255, 255),
-             255);
-     gray = new RGBPixel(this.getLuma(100, 100, 100),
-             this.getLuma(100, 100, 100),
-             this.getLuma(100, 100, 100),
-             255);
+    black = new RGBPixel(this.getLuma(0, 0, 0),
+            this.getLuma(0, 0, 0),
+            this.getLuma(0, 0, 0), 255);
+    green = new RGBPixel(this.getLuma(0, 255, 0),
+            this.getLuma(0, 255, 0),
+            this.getLuma(0, 255, 0), 255);
+    white = new RGBPixel(255, 255, 255, 255);
+    red = new RGBPixel(this.getLuma(255, 0, 0),
+            this.getLuma(255, 0, 0),
+            this.getLuma(255, 0, 0),
+            255);
+    blue = new RGBPixel(this.getLuma(0, 0, 255),
+            this.getLuma(0, 0, 255),
+            this.getLuma(0, 0, 255),
+            255);
+    purple = new RGBPixel(this.getLuma(255, 0, 255),
+            this.getLuma(255, 0, 255),
+            this.getLuma(255, 0, 255),
+            255);
+    yellow = new RGBPixel(this.getLuma(255, 255, 0),
+            this.getLuma(255, 255, 0),
+            this.getLuma(255, 255, 0),
+            255);
+    teal = new RGBPixel(this.getLuma(0, 255, 255),
+            this.getLuma(0, 255, 255),
+            this.getLuma(0, 255, 255),
+            255);
+    gray = new RGBPixel(this.getLuma(100, 100, 100),
+            this.getLuma(100, 100, 100),
+            this.getLuma(100, 100, 100),
+            255);
 
     pixels2[0][0] = black;
     pixels2[0][1] = green;
@@ -471,9 +470,9 @@ public class TestAdjustors {
 
     ImageProcessingModel m6 = m.apply(new GrayscaleAdjustor("luma"));
 
-    for (int row = 0; row < m6.getImageHeight(); row++ ) {
-      for (int col = 0; col < m6.getImageWidth(); col++ ) {
-        for (String channel: channels) {
+    for (int row = 0; row < m6.getImageHeight(); row++) {
+      for (int col = 0; col < m6.getImageWidth(); col++) {
+        for (String channel : channels) {
           assertEquals(pixels2[row][col].getChannel(channel),
                   m6.getPixelAt(row, col).getChannel(channel));
         }

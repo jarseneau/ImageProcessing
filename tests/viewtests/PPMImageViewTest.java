@@ -1,4 +1,4 @@
-package viewTests;
+package viewtests;
 
 import org.junit.Test;
 

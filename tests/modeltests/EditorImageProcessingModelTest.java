@@ -1,4 +1,4 @@
-package modelTests;
+package modeltests;
 
 import org.junit.Test;
 

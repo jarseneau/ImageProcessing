@@ -6,6 +6,9 @@ import java.util.Objects;
 
 import model.ImageProcessingModel;
 
+/**
+ * Represents a PPM image view and supports saving images as .ppm files.
+ */
 public class PPMImageView implements ImageProcessingView {
 
   Appendable output;
@@ -35,7 +38,7 @@ public class PPMImageView implements ImageProcessingView {
    * @param model the model which should be converted
    * @return the PPM text as a string
    * @throws IllegalArgumentException if the pixels in the model do not have the correct
-   * channel
+   *                                  channel
    */
   private String ppmToString(ImageProcessingModel model) throws IllegalArgumentException {
     StringBuilder builder = new StringBuilder();

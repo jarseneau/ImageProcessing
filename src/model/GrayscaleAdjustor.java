@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * This class represents an adjustor on a PPM image that brightens every
- * pixel by a value given by the constructor
+ * pixel by a value given by the constructor.
  */
 
 public class GrayscaleAdjustor implements IImageAdjustor {
@@ -31,7 +31,7 @@ public class GrayscaleAdjustor implements IImageAdjustor {
    * @param m the model of the image being operated on
    * @return a new ImageProcessingModel made from the grayscale pixels
    * @throws IllegalArgumentException if the component that is passed in is not contained
-   * within the pixel
+   *                                  within the pixel
    * @throws NullPointerException if the model provided is null
    */
   @Override

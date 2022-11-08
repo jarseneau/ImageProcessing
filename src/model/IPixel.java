@@ -20,7 +20,8 @@ public interface IPixel {
    * @param val the name of the pixel to be changed
    * @return the new pixel resulting from the modification
    * @throws IllegalArgumentException if the given name is not a channel on this pixel
-   * or a user is trying to edit statistic about a pixel and not channels
+   *                                  or a user is trying to edit statistic about a pixel
+   *                                  and not channels
    */
   IPixel modifyChannel(String channelName, int val) throws IllegalArgumentException;
 

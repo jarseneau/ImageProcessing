@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * This class represents an adjustor on an image that brightens every
- * pixel by a value given by the constructor
+ * pixel by a value given by the constructor.
  */
 public class BrightenAdjustor implements IImageAdjustor {
 

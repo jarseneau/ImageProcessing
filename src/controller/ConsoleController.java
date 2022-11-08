@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
@@ -20,9 +19,9 @@ import view.ImageProcessingView;
  * the user can type instructions to load, manipulate, and save images.
  *
  * <p>This controller works with images to read its pixels and create Image Processing Models
- * stored in a Map<String, Model> called "images".
+ * stored in a Map(String, Model) called "images".
  */
-public class ConsoleController implements ImageProcessingController{
+public class ConsoleController implements ImageProcessingController {
 
   private Readable readable;
   private Map<String, ImageProcessingModel> images;
@@ -37,15 +36,36 @@ public class ConsoleController implements ImageProcessingController{
    * @param view the View object to transmit outgoing messages to.
    */
   public ConsoleController(Readable readable, ImageProcessingView view) {
-    if ((readable == null)) {
-      throw new IllegalArgumentException("Readable or appendable is null");
+    if (readable == null || view == null) {
+      throw new IllegalArgumentException("Readable or view is null");
     }
 
     this.readable = readable;
     this.images = new HashMap<>();
     this.view = view;
 
-   }
+  }
+
+  /**
+   * FOR TESTING ONLY.
+   * Create a controller with a given map of models, readable (to take inputs)
+   * and appendable (to transmit output).
+   *
+   * @param readable the Readable object for inputs.
+   * @param view the View object to transmit outgoing messages to.
+   */
+  public ConsoleController(Readable readable,
+                           ImageProcessingView view,
+                           Map<String, ImageProcessingModel> map) {
+    if (readable == null || view == null) {
+      throw new IllegalArgumentException("Readable or view is null");
+    }
+
+    this.readable = readable;
+    this.images = map;
+    this.view = view;
+
+  }
 
   /**
    * The main method that relinquishes control of the application to the controller.
@@ -98,7 +118,7 @@ public class ConsoleController implements ImageProcessingController{
             name1 = sc.next();
             name2 = sc.next();
             writeMessage("Loading image at " + name1 + " as " + name2);
-            ImageProcessingModel model = new PPMProcessingModel(name1);
+            ImageProcessingModel model = new PPMProcessingModel(name1); //Too specific for future
             images.put(name2, model);
           } catch (IllegalArgumentException e) {
             response = "Error: " + e.getMessage();
@@ -150,7 +170,8 @@ public class ConsoleController implements ImageProcessingController{
             name1 = sc.next(); //name1 = image-name
             name2 = sc.next(); //name2 = dest-image-name
             try {
-              writeMessage("Brightening " + name1 + " by " + increment + " and storing as: " + name2);
+              writeMessage("Brightening " + name1 + " by "
+                      + increment + " and storing as: " + name2);
               images.put(name2, images.get(name1).apply(new BrightenAdjustor(increment)));
             } catch (NullPointerException e) {
               response = "Error: image " + name1 + " not yet loaded";

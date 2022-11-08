@@ -1,7 +1,10 @@
-package viewTests;
+package viewtests;
 
 import java.io.IOException;
 
+/**
+ * a Mock appendable object to only throw errors.
+ */
 public class MockAppendable implements Appendable {
 
   @Override

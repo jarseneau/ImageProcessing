@@ -6,7 +6,7 @@ import java.util.Objects;
  * To represent an image that has been created by editing an image
  * using the image processing program.
  */
-public class EditorImageProcessingModel implements ImageProcessingModel{
+public class EditorImageProcessingModel implements ImageProcessingModel {
 
   private final IPixel[][] pixels;
   private final int maxValue;

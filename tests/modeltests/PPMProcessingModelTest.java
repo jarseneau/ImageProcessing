@@ -1,4 +1,4 @@
-package modelTests;
+package modeltests;
 
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ import static org.junit.Assert.fail;
 
 
 /**
- * To represent tests on the PPMProcessingModel
+ * To represent tests on the PPMProcessingModel.
  */
 public class PPMProcessingModelTest {
 

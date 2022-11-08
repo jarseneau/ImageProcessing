@@ -1,4 +1,4 @@
-package modelTests;
+package modeltests;
 
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ import static org.junit.Assert.fail;
 public class RGBPixelTest {
 
   /**
-   * Helper method to get the luma of red green and blue
+   * Helper method to get the luma of red green and blue.
    * @param red the red value
    * @param green the green value
    * @param blue the blue value
