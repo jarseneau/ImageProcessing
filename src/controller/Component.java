@@ -5,9 +5,23 @@ import java.util.Map;
 import model.GrayscaleAdjustor;
 import model.ImageProcessingModel;
 
+/**
+ * A Command that uses a GrayscaleAdjustor to take just one component of
+ * the given image and store it in the images map with the new name.
+ */
 public class Component extends AbstractImageCommand {
 
   String component;
+
+  /**
+   * Constructor for Component, handles field setting.
+   *
+   * @param name1 the first string value for this command
+   * @param name2 the second string value for this command
+   * @param images the map of images that the program is running on
+   * @param c the controller to send information back to.
+   * @param component the String component to grayscale by (eg. "red")
+   */
   Component(String name1, String name2, Map<String, ImageProcessingModel> images,
             ConsoleController c, String component) {
     super(name1, name2, images, c);

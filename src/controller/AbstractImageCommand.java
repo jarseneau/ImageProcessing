@@ -4,13 +4,24 @@ import java.util.Map;
 
 import model.ImageProcessingModel;
 
+/**
+ * An abstract class to represent an image command. Cleans up construction
+ * because all image commands take in the same 4 things.
+ */
 public abstract class AbstractImageCommand implements ImageCommand {
 
-  String name1;
-  String name2;
-  Map<String, ImageProcessingModel> images;
-  ConsoleController c;
+  protected String name1;
+  protected String name2;
+  protected Map<String, ImageProcessingModel> images;
+  protected ConsoleController c;
 
+  /**
+   * Constructor for AbstractImageCommand, handles field setting for the command.
+   * @param name1 the first string value for this command
+   * @param name2 the second string value for this command
+   * @param images the map of images that the program is running on
+   * @param c the controller to send information back to.
+   */
   AbstractImageCommand(String name1, String name2, Map<String, ImageProcessingModel> images,
                        ConsoleController c) {
     this.name1 = name1;
