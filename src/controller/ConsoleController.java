@@ -31,54 +31,23 @@ public class ConsoleController implements ImageProcessingController {
 
   /**
    * Create a controller with an empty map of models, readable (to take inputs)
-   * and appendable (to transmit output).
+   * and appendable (to transmit output). Constructs an empty hashmap to store
+   * images in.
    * 
    * @param readable the Readable object for inputs.
    * @param view the View object to transmit outgoing messages to.
    */
   public ConsoleController(Readable readable, ImageProcessingView view) {
-    if (readable == null || view == null) {
-      throw new IllegalArgumentException("Readable or view is null");
-    }
-
-    this.readable = readable;
-    this.images = new HashMap<>();
-    this.view = view;
-    this.knownCommands = new HashMap<>();
-    knownCommands.put("load", s->new Load(s.next(), s.next(), images, this));
-    knownCommands.put("save", s->new Save(s.next(), s.next(), images, this));
-    knownCommands.put("red-component", s->new Component(s.next(), s.next(), images, this,
-            "red"));
-    knownCommands.put("blue-component", s->new Component(s.next(), s.next(), images, this,
-            "blue"));
-    knownCommands.put("green-component", s->new Component(s.next(), s.next(), images, this,
-            "green"));
-    knownCommands.put("value-component", s->new Component(s.next(), s.next(), images, this,
-            "value"));
-    knownCommands.put("luma-component", s->new Component(s.next(), s.next(), images, this,
-            "luma"));
-    knownCommands.put("intensity-component", s->new Component(s.next(), s.next(), images,
-            this, "intensity"));
-
-    knownCommands.put("horizontal-flip", s-> new HFlip(s.next(), s.next(), images, this));
-    knownCommands.put("vertical-flip", s-> new VFlip(s.next(), s.next(), images, this));
-    knownCommands.put("brighten", s-> new Brighten(s.nextInt(), s.next(), s.next(), images,
-            this));
-
-    knownCommands.put("blur", s-> new Blur(s.next(), s.next(), images, this));
-    knownCommands.put("sharpen", s-> new Sharpen(s.next(), s.next(), images, this));
-
-    knownCommands.put("luma", s-> new Luma(s.next(), s.next(), images, this));
-    knownCommands.put("sepia", s-> new Sepia(s.next(), s.next(), images, this));
+    this(readable, view, new HashMap<>());
   }
 
   /**
-   * FOR TESTING ONLY.
    * Create a controller with a given map of models, readable (to take inputs)
    * and appendable (to transmit output).
    *
    * @param readable the Readable object for inputs.
    * @param view the View object to transmit outgoing messages to.
+   * @param map the Map of Strings to Models used to store values in the program.
    */
   public ConsoleController(Readable readable,
                            ImageProcessingView view,
@@ -119,7 +88,6 @@ public class ConsoleController implements ImageProcessingController {
 
     knownCommands.put("luma", s-> new Luma(s.next(), s.next(), images, this));
     knownCommands.put("sepia", s-> new Sepia(s.next(), s.next(), images, this));
-
 
   }
 
