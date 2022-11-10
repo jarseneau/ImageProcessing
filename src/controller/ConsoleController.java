@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Function;
 
 import model.BrightenAdjustor;
 import model.FlipHorizontalAdjustor;
@@ -25,7 +26,7 @@ public class ConsoleController implements ImageProcessingController {
 
   private Readable readable;
   private Map<String, ImageProcessingModel> images;
-
+  private Map<String, Function<Scanner, ImageCommand>> knownCommands;
   private ImageProcessingView view;
 
   /**
@@ -43,7 +44,32 @@ public class ConsoleController implements ImageProcessingController {
     this.readable = readable;
     this.images = new HashMap<>();
     this.view = view;
+    this.knownCommands = new HashMap<>();
+    knownCommands.put("load", s->new Load(s.next(), s.next(), images, this));
+    knownCommands.put("save", s->new Save(s.next(), s.next(), images, this));
+    knownCommands.put("red-component", s->new Component(s.next(), s.next(), images, this,
+            "red"));
+    knownCommands.put("blue-component", s->new Component(s.next(), s.next(), images, this,
+            "blue"));
+    knownCommands.put("green-component", s->new Component(s.next(), s.next(), images, this,
+            "green"));
+    knownCommands.put("value-component", s->new Component(s.next(), s.next(), images, this,
+            "value"));
+    knownCommands.put("luma-component", s->new Component(s.next(), s.next(), images, this,
+            "luma"));
+    knownCommands.put("intensity-component", s->new Component(s.next(), s.next(), images,
+            this, "intensity"));
 
+    knownCommands.put("horizontal-flip", s-> new HFlip(s.next(), s.next(), images, this));
+    knownCommands.put("vertical-flip", s-> new VFlip(s.next(), s.next(), images, this));
+    knownCommands.put("brighten", s-> new Brighten(s.nextInt(), s.next(), s.next(), images,
+            this));
+
+    knownCommands.put("blur", s-> new Blur(s.next(), s.next(), images, this));
+    knownCommands.put("sharpen", s-> new Sharpen(s.next(), s.next(), images, this));
+
+    knownCommands.put("luma", s-> new Luma(s.next(), s.next(), images, this));
+    knownCommands.put("sepia", s-> new Sepia(s.next(), s.next(), images, this));
   }
 
   /**
@@ -65,6 +91,36 @@ public class ConsoleController implements ImageProcessingController {
     this.images = map;
     this.view = view;
 
+
+
+    this.knownCommands = new HashMap<>();
+    knownCommands.put("load", s->new Load(s.next(), s.next(), images, this));
+    knownCommands.put("save", s->new Save(s.next(), s.next(), images, this));
+    knownCommands.put("red-component", s->new Component(s.next(), s.next(), images, this,
+            "red"));
+    knownCommands.put("blue-component", s->new Component(s.next(), s.next(), images, this,
+            "blue"));
+    knownCommands.put("green-component", s->new Component(s.next(), s.next(), images, this,
+            "green"));
+    knownCommands.put("value-component", s->new Component(s.next(), s.next(), images, this,
+            "value"));
+    knownCommands.put("luma-component", s->new Component(s.next(), s.next(), images, this,
+            "luma"));
+    knownCommands.put("intensity-component", s->new Component(s.next(), s.next(), images,
+            this, "intensity"));
+
+    knownCommands.put("horizontal-flip", s-> new HFlip(s.next(), s.next(), images, this));
+    knownCommands.put("vertical-flip", s-> new VFlip(s.next(), s.next(), images, this));
+    knownCommands.put("brighten", s-> new Brighten(s.nextInt(), s.next(), s.next(), images,
+            this));
+
+    knownCommands.put("blur", s-> new Blur(s.next(), s.next(), images, this));
+    knownCommands.put("sharpen", s-> new Sharpen(s.next(), s.next(), images, this));
+
+    knownCommands.put("luma", s-> new Luma(s.next(), s.next(), images, this));
+    knownCommands.put("sepia", s-> new Sepia(s.next(), s.next(), images, this));
+
+
   }
 
   /**
@@ -75,6 +131,7 @@ public class ConsoleController implements ImageProcessingController {
   @Override
   public void control() throws IllegalStateException {
     Scanner sc = new Scanner(readable);
+    ImageCommand c;
     boolean quit = false;
 
     //print the welcome message
@@ -88,7 +145,15 @@ public class ConsoleController implements ImageProcessingController {
       } else if (userInstruction.equals("menu")) {
         printMenu();
       } else {
-        processCommand(userInstruction, sc);
+        Function<Scanner, ImageCommand> cmd =
+                knownCommands.getOrDefault(userInstruction, null);
+        if (cmd == null) {
+          writeMessage("Error: command " + userInstruction + " not found.");
+        }
+        else {
+          c = cmd.apply(sc);
+          c.go();
+        }
       }
     }
 
@@ -231,5 +296,9 @@ public class ConsoleController implements ImageProcessingController {
   // sends messages to view, handles errors.
   protected void writeMessage(String message) throws IllegalStateException {
     view.renderMessage(message);
+  }
+
+  protected void trySave(String name1, String name2) {
+    this.view.save(name1, images.get(name2));
   }
 }

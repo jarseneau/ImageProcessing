@@ -89,8 +89,7 @@ public class TestConsoleController {
     controller.control();
 
     String expectedOut =
-            "Loading image at Koala.ppm as k\n" +
-                    "Successful!\n";
+            "Loading image at Koala.ppm as k\n";
 
     assertEquals(welcome + menu + expectedOut + farewell, out.toString());
   }
@@ -146,7 +145,6 @@ public class TestConsoleController {
 
     assertEquals(expectedLog, mockView.getLog().toString());
   }
-
 
 
 
