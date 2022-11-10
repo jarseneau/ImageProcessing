@@ -14,6 +14,16 @@ Class: BrightenAdjustor         -> handles brightening functionality
 Class: FlipHorizontalAdjustor   -> handles horizontal flipping
 Class: FlipVerticalAdjustor     -> handles vertical flipping
 Class: GrayscaleAdjustor        -> handles gray-scaling by any component
+
+VERSION 2:
+Abstract Class: AFilteringAdjustor
+    represents any adjustor that uses a filtering matrix to transform an image
+    Subclass: BlurFilteringAdjustor     -> handles blurring functionality
+    Subclass: SharpenFilteringAdjustor  -> handles sharpening functionality
+Abstract Class: AColorTransformationAdjustor
+    represents any adjustor that uses a color transformation matrix to transform an image
+    Subclass: GrayscaleLumaTransformation     -> handles gray-scaling with color matrix
+    Subclass: SepiaTransformation             -> handles toning an image with sepia
 ------------------------------
 Interface: ImageProcessingModel
     Overarching interface to represent any image model in this program
@@ -25,17 +35,31 @@ Class: PPMProcessingModel
 
 Class: EditorImageProcessingModel
     Represents any image model that is created by some operation on another image model.
+
+VERSION 2:
+Class: ImageIOProcessingModel
+    represents an image model downloaded from a file source that is not ppm
 ------------------------------
 Interface: IPixel
     Represents a pixel of any kind, with channels (or channel).
 Class: RGBPixel
-    Represents an RGB pixel, with red, green, and blue channels as well as value,
-    intensity, and luma.
+    Represents an RGB pixel, with red, green, blue, and alpha
+    channels with alpha always being 255 as well as value, intensity, and luma.
+
+VERSION 2:
+Class: AlphaPixel
+    Represents an RGB pixel with an alpha channel that is significant in its
+    representation.
 ------------------------------
 Interface: ImageProcessingView
     Represents any view of the application with the ability to save.
 Class PPMImageView
     Represents the view of a PPM image, with the ability to save it.
+
+VERSION 2:
+Class: ImageIOView
+    Represents the view of an IO image, with the ability to save it
+    to the specified format
 ------------------------------
 Class: ImageProcessing
     The Main class for this program.

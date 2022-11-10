@@ -2,14 +2,17 @@ package modeltests;
 
 import org.junit.Test;
 
+import model.BlurFilteringAdjustor;
 import model.BrightenAdjustor;
 import model.EditorImageProcessingModel;
 import model.FlipHorizontalAdjustor;
 import model.FlipVerticalAdjustor;
 import model.GrayscaleAdjustor;
+import model.GrayscaleLumaTransformation;
 import model.IPixel;
 import model.ImageProcessingModel;
 import model.RGBPixel;
+import model.SepiaTransformation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -527,6 +530,107 @@ public class TestAdjustors {
   public void testGrayscaleNull() {
     try {
       new GrayscaleAdjustor("red").adjust(null);
+      fail();
+    } catch (NullPointerException e) {
+      assertNull(e.getMessage());
+    }
+  }
+
+  @Test
+  public void testFilterAdjustor() {
+    IPixel black = new RGBPixel(0, 0, 0, 255);
+    IPixel green = new RGBPixel(0, 255, 0, 255);
+    IPixel white = new RGBPixel(255, 255, 255, 255);
+    IPixel red = new RGBPixel(255, 0, 0, 255);
+    IPixel blue = new RGBPixel(0, 0, 255, 255);
+    IPixel purple = new RGBPixel(255, 0, 255, 255);
+    IPixel yellow = new RGBPixel(255, 255, 0, 255);
+    IPixel teal = new RGBPixel(0, 255, 255, 255);
+    IPixel gray = new RGBPixel(100, 100, 100, 255);
+
+
+    IPixel[][] pixels = new IPixel[3][3];
+    pixels[0][0] = black;
+    pixels[0][1] = green;
+    pixels[0][2] = white;
+    pixels[1][0] = red;
+    pixels[1][1] = blue;
+    pixels[1][2] = purple;
+    pixels[2][0] = yellow;
+    pixels[2][1] = teal;
+    pixels[2][2] = gray;
+
+    ImageProcessingModel m = new EditorImageProcessingModel(pixels, 255);
+
+    ImageProcessingModel m1 = m.apply(new BlurFilteringAdjustor());
+
+    assertEquals(32, m1.getPixelAt(0, 0).getChannel("red"));
+    assertEquals(32, m1.getPixelAt(0, 0).getChannel("green"));
+    assertEquals(16, m1.getPixelAt(0, 0).getChannel("blue"));
+
+    assertEquals(102, m1.getPixelAt(1, 1).getChannel("red"));
+    assertEquals(102, m1.getPixelAt(1, 1).getChannel("green"));
+    assertEquals(150, m1.getPixelAt(1, 1).getChannel("blue"));
+
+    assertEquals(57, m1.getPixelAt(2, 2).getChannel("red"));
+    assertEquals(57, m1.getPixelAt(2, 2).getChannel("green"));
+    assertEquals(105, m1.getPixelAt(2, 2).getChannel("blue"));
+  }
+
+  @Test
+  public void testFilteringNull() {
+    try {
+      new BlurFilteringAdjustor().adjust(null);
+      fail();
+    } catch (NullPointerException e) {
+      assertNull(e.getMessage());
+    }
+  }
+
+  @Test
+  public void testColorTransformation() {
+    IPixel black = new RGBPixel(0, 0, 0, 255);
+    IPixel green = new RGBPixel(0, 255, 0, 255);
+    IPixel white = new RGBPixel(255, 255, 255, 255);
+    IPixel red = new RGBPixel(255, 0, 0, 255);
+    IPixel blue = new RGBPixel(0, 0, 255, 255);
+    IPixel purple = new RGBPixel(255, 0, 255, 255);
+    IPixel yellow = new RGBPixel(255, 255, 0, 255);
+    IPixel teal = new RGBPixel(0, 255, 255, 255);
+    IPixel gray = new RGBPixel(100, 100, 100, 255);
+
+
+    IPixel[][] pixels = new IPixel[3][3];
+    pixels[0][0] = black;
+    pixels[0][1] = green;
+    pixels[0][2] = white;
+    pixels[1][0] = red;
+    pixels[1][1] = blue;
+    pixels[1][2] = purple;
+    pixels[2][0] = yellow;
+    pixels[2][1] = teal;
+    pixels[2][2] = gray;
+
+    ImageProcessingModel m = new EditorImageProcessingModel(pixels, 255);
+
+    ImageProcessingModel m1 = m.apply(new GrayscaleLumaTransformation());
+
+    for (int row = 0; row < m1.getImageHeight(); row++) {
+      for (int col = 0; col < m1.getImageWidth(); col++) {
+        assertEquals(m.getPixelAt(row, col).getChannel("luma"),
+                m1.getPixelAt(row, col).getChannel("red"));
+        assertEquals(m.getPixelAt(row, col).getChannel("luma"),
+                m1.getPixelAt(row, col).getChannel("green"));
+        assertEquals(m.getPixelAt(row, col).getChannel("luma"),
+                m1.getPixelAt(row, col).getChannel("blue"));
+      }
+    }
+  }
+
+  @Test
+  public void testTransformationNull() {
+    try {
+      new SepiaTransformation().adjust(null);
       fail();
     } catch (NullPointerException e) {
       assertNull(e.getMessage());

@@ -131,6 +131,7 @@ public class PixelTest {
     assertEquals(133, rgb.getChannel("red"));
     assertEquals(245, rgb.getChannel("green"));
     assertEquals(79, rgb.getChannel("blue"));
+    assertEquals(255, rgb.getChannel("alpha"));
     assertEquals(245, rgb.getChannel("value"));
     assertEquals(152, rgb.getChannel("intensity"));
     assertEquals(getLuma(133, 245, 79), rgb.getChannel("luma"));

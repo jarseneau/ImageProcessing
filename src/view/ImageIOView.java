@@ -23,7 +23,8 @@ public class ImageIOView implements ImageProcessingView {
   }
 
   @Override
-  public void save(String filename, ImageProcessingModel model) throws IllegalStateException, NullPointerException {
+  public void save(String filename, ImageProcessingModel model)
+          throws IllegalStateException, NullPointerException {
 
     // delegate to ppmView for ppms, otherwise use ImageIO
     if (this.getFileType(filename).equals("ppm")) {
