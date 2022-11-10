@@ -1,8 +1,13 @@
 package view;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
+
+import javax.imageio.ImageIO;
 
 import model.ImageProcessingModel;
 
@@ -20,7 +25,6 @@ public class PPMImageView implements ImageProcessingView {
    * @throws NullPointerException if the output given is null
    */
   public PPMImageView(Appendable output) throws NullPointerException {
-    Objects.requireNonNull(output);
     this.output = output;
   }
 
@@ -101,4 +105,5 @@ public class PPMImageView implements ImageProcessingView {
       throw new IllegalStateException("Something went wrong while writing to appendable.");
     }
   }
+
 }

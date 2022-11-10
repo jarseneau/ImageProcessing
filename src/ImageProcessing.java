@@ -4,10 +4,12 @@ import controller.ConsoleController;
 import controller.ImageProcessingController;
 import model.BlurFilteringAdjustor;
 import model.GrayscaleLumaTransformation;
+import model.ImageIOProcessingModel;
 import model.ImageProcessingModel;
 import model.PPMProcessingModel;
 import model.SepiaTransformation;
 import model.SharpenFilteringAdjustor;
+import view.ImageIOView;
 import view.ImageProcessingView;
 import view.PPMImageView;
 
@@ -22,8 +24,8 @@ public class ImageProcessing {
    */
   public static void main(String[] args) {
 
-    ImageProcessingModel m = new PPMProcessingModel("Koala.ppm");
-    ImageProcessingView v = new PPMImageView();
-    v.save("gray.ppm", m.apply(new SepiaTransformation()));
+    ImageProcessingModel m = new ImageIOProcessingModel("manhattan-small.png");
+    ImageProcessingView v = new ImageIOView();
+    v.save("sharp.jpg", m.apply(new SharpenFilteringAdjustor()).apply(new SharpenFilteringAdjustor()));
   }
 }
