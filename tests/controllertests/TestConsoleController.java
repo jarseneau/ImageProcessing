@@ -23,7 +23,7 @@ public class TestConsoleController {
   static final String welcome = "Welcome to the Image Processing program\n";
   static final String menu = "Supported operations are:\n" +
           "\tload file-path image-name\n" +
-          "\tsave file-path image-name\n"+
+          "\tsave file-path image-name\n" +
           "\tred-component image-path image-name " +
                        "(same for green, blue, value, luma and intensity)\n" +
           "\thorizontal-flip image-path image-name\n" +

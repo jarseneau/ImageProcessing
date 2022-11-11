@@ -24,7 +24,7 @@ public class HFlip extends AbstractImageCommand {
   }
 
   @Override
-  public void go() {
+  public void execute() {
     try {
       c.writeMessage("Flipping " + name1 + " horizontally and storing as: " + name2);
       images.put(name2, images.get(name1).apply(new FlipHorizontalAdjustor()));

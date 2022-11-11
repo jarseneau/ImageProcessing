@@ -29,7 +29,7 @@ public class Brighten extends AbstractImageCommand {
   }
 
   @Override
-  public void go() {
+  public void execute() {
     try {
       c.writeMessage("Brightening " + name1 + " by "
               + increment + " and storing as: " + name2);

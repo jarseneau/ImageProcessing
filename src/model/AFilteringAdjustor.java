@@ -1,10 +1,12 @@
 package model;
 
 import java.util.Objects;
+
 /**
  * To represent any adjustor that uses a filtering operation on the pixels
  * of an image.
  */
+
 public abstract class AFilteringAdjustor implements IImageAdjustor {
 
   protected final Double[][] kernel;

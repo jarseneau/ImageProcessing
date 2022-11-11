@@ -29,6 +29,7 @@ public abstract class AbstractImageCommand implements ImageCommand {
     this.images = images;
     this.c = c;
   }
+
   @Override
-  public abstract void go();
+  public abstract void execute();
 }

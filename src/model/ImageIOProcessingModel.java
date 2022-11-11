@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.File;
@@ -8,9 +7,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class ImageIOProcessingModel extends AImageFromFileProcessing {
+/**
+ * A class to represent an image loaded from a file that is not ppm.
+ */
 
-  private BufferedImage image;
+public class ImageIOProcessingModel extends AImageFromFileProcessing {
 
   public ImageIOProcessingModel(String fileName) {
     super(fileName);
@@ -19,6 +20,7 @@ public class ImageIOProcessingModel extends AImageFromFileProcessing {
   @Override
   protected IPixel[][] loadFromFile(String fileName) throws IllegalArgumentException {
 
+    BufferedImage image;
     try {
       File inputFile = new File(fileName);
       image = ImageIO.read(inputFile);

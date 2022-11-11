@@ -3,6 +3,10 @@ package model;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * A class to represent a pixel that has an alpha channel.
+ */
+
 public class AlphaPixel implements IPixel {
   protected final int maxValue;
   protected final HashMap<String, Integer> channels;

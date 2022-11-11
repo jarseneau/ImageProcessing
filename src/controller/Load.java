@@ -27,7 +27,7 @@ public class Load extends AbstractImageCommand {
   }
 
   @Override
-  public void go() {
+  public void execute() {
     try {
       ImageProcessingModel model;
       c.writeMessage("Loading image at " + name1 + " as " + name2);

@@ -2,7 +2,6 @@ package controller;
 
 import java.util.Map;
 
-import model.FlipVerticalAdjustor;
 import model.GrayscaleLumaTransformation;
 import model.ImageProcessingModel;
 
@@ -25,7 +24,7 @@ public class Luma extends AbstractImageCommand {
   }
 
   @Override
-  public void go() {
+  public void execute() {
     try {
       c.writeMessage("Gray-scaling " + name1 + " by luma and storing as: " + name2);
       images.put(name2, images.get(name1).apply(new GrayscaleLumaTransformation()));

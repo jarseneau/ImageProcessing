@@ -3,7 +3,6 @@ package controller;
 import java.util.Map;
 
 import model.BlurFilteringAdjustor;
-import model.FlipVerticalAdjustor;
 import model.ImageProcessingModel;
 
 /**
@@ -25,7 +24,7 @@ public class Blur extends AbstractImageCommand {
   }
 
   @Override
-  public void go() {
+  public void execute() {
     try {
       c.writeMessage("Blurring " + name1 + " and storing as: " + name2);
       images.put(name2, images.get(name1).apply(new BlurFilteringAdjustor()));

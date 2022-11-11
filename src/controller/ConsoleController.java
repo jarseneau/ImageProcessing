@@ -58,31 +58,31 @@ public class ConsoleController implements ImageProcessingController {
 
 
     this.knownCommands = new HashMap<>();
-    knownCommands.put("load", s->new Load(s.next(), s.next(), images, this));
-    knownCommands.put("save", s->new Save(s.next(), s.next(), images, this));
-    knownCommands.put("red-component", s->new Component(s.next(), s.next(), images, this,
+    knownCommands.put("load", s -> new Load(s.next(), s.next(), images, this));
+    knownCommands.put("save", s -> new Save(s.next(), s.next(), images, this));
+    knownCommands.put("red-component", s -> new Component(s.next(), s.next(), images, this,
             "red"));
-    knownCommands.put("blue-component", s->new Component(s.next(), s.next(), images, this,
+    knownCommands.put("blue-component", s -> new Component(s.next(), s.next(), images, this,
             "blue"));
-    knownCommands.put("green-component", s->new Component(s.next(), s.next(), images, this,
+    knownCommands.put("green-component", s -> new Component(s.next(), s.next(), images, this,
             "green"));
-    knownCommands.put("value-component", s->new Component(s.next(), s.next(), images, this,
+    knownCommands.put("value-component", s -> new Component(s.next(), s.next(), images, this,
             "value"));
-    knownCommands.put("luma-component", s->new Component(s.next(), s.next(), images, this,
+    knownCommands.put("luma-component", s -> new Component(s.next(), s.next(), images, this,
             "luma"));
-    knownCommands.put("intensity-component", s->new Component(s.next(), s.next(), images,
+    knownCommands.put("intensity-component", s -> new Component(s.next(), s.next(), images,
             this, "intensity"));
 
-    knownCommands.put("horizontal-flip", s-> new HFlip(s.next(), s.next(), images, this));
-    knownCommands.put("vertical-flip", s-> new VFlip(s.next(), s.next(), images, this));
-    knownCommands.put("brighten", s-> new Brighten(s.nextInt(), s.next(), s.next(), images,
+    knownCommands.put("horizontal-flip", s ->  new HFlip(s.next(), s.next(), images, this));
+    knownCommands.put("vertical-flip", s ->  new VFlip(s.next(), s.next(), images, this));
+    knownCommands.put("brighten", s ->  new Brighten(s.nextInt(), s.next(), s.next(), images,
             this));
 
-    knownCommands.put("blur", s-> new Blur(s.next(), s.next(), images, this));
-    knownCommands.put("sharpen", s-> new Sharpen(s.next(), s.next(), images, this));
+    knownCommands.put("blur", s ->  new Blur(s.next(), s.next(), images, this));
+    knownCommands.put("sharpen", s ->  new Sharpen(s.next(), s.next(), images, this));
 
-    knownCommands.put("luma", s-> new Luma(s.next(), s.next(), images, this));
-    knownCommands.put("sepia", s-> new Sepia(s.next(), s.next(), images, this));
+    knownCommands.put("luma", s ->  new Luma(s.next(), s.next(), images, this));
+    knownCommands.put("sepia", s ->  new Sepia(s.next(), s.next(), images, this));
 
   }
 
@@ -115,7 +115,7 @@ public class ConsoleController implements ImageProcessingController {
             writeMessage("Error: command " + userInstruction + " not found.");
           } else {
             c = cmd.apply(sc);
-            c.go();
+            c.execute();
           }
         } catch (InputMismatchException e) {
           writeMessage("Incorrect arguments for given command found, try again.");

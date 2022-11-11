@@ -21,8 +21,9 @@ public class Save extends AbstractImageCommand {
               ConsoleController c) {
     super(name1, name2, images, c);
   }
+
   @Override
-  public void go() {
+  public void execute() {
     try {
       c.writeMessage("Saving " + name2 + " to: " + name1);
       c.trySave(name1, name2);

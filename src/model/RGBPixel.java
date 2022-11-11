@@ -17,7 +17,7 @@ public class RGBPixel extends AlphaPixel {
    * @throws IllegalArgumentException if the red, green, or blue values are invalid
    */
   public RGBPixel(int red, int green, int blue, int maxValue) throws IllegalArgumentException {
-   super(red, green, blue, 255, maxValue);
+    super(red, green, blue, 255, maxValue);
   }
 
   @Override

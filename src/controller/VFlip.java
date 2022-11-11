@@ -19,12 +19,13 @@ public class VFlip extends AbstractImageCommand {
    * @param images the map of images that the program is running on
    * @param c the controller to send information back to.
    */
-  VFlip(String name1, String name2, Map<String, ImageProcessingModel> images, ConsoleController c) {
+  VFlip(String name1, String name2,
+        Map<String, ImageProcessingModel> images, ConsoleController c) {
     super(name1, name2, images, c);
   }
 
   @Override
-  public void go() {
+  public void execute() {
     try {
       c.writeMessage("Flipping " + name1 + " vertically and storing as: " + name2);
       images.put(name2, images.get(name1).apply(new FlipVerticalAdjustor()));

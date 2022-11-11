@@ -29,7 +29,7 @@ public class Component extends AbstractImageCommand {
   }
 
   @Override
-  public void go() {
+  public void execute() {
     try {
       c.writeMessage("Gray-scaling " + name1 + " and storing as: " + name2);
       //put new model into the images map.

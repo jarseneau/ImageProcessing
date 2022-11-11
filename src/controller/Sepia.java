@@ -2,7 +2,6 @@ package controller;
 
 import java.util.Map;
 
-import model.FlipVerticalAdjustor;
 import model.ImageProcessingModel;
 import model.SepiaTransformation;
 
@@ -25,7 +24,7 @@ public class Sepia extends AbstractImageCommand {
   }
 
   @Override
-  public void go() {
+  public void execute() {
     try {
       c.writeMessage("Sepia filtering " + name1 + " and storing as: " + name2);
       images.put(name2, images.get(name1).apply(new SepiaTransformation()));

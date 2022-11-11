@@ -8,5 +8,5 @@ public interface ImageCommand {
   /**
    * A method which runs this command.
    */
-  void go();
+  void execute();
 }
