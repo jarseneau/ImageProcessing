@@ -6,16 +6,17 @@ import model.EditorImageProcessingModel;
 import model.IPixel;
 import model.ImageIOProcessingModel;
 import model.ImageProcessingModel;
-import model.PPMProcessingModel;
 import model.RGBPixel;
 import view.ImageIOView;
 import view.ImageProcessingView;
-import view.PPMImageView;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+/**
+ * To represent tests on the ImageIOView class.
+ */
 public class ImageIOViewTest {
 
   @Test

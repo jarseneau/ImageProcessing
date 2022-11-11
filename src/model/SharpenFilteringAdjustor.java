@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * This class represents an adjustor that sharpens an image.
+ */
 public class SharpenFilteringAdjustor extends AFilteringAdjustor {
 
   @Override

@@ -23,7 +23,8 @@ public class AlphaPixel implements IPixel {
    * @param alpha the value of the alpha channel
    * @throws IllegalArgumentException if the red, green, or blue values are invalid
    */
-  public AlphaPixel(int red, int green, int blue, int alpha, int maxValue) throws IllegalArgumentException {
+  public AlphaPixel(int red, int green, int blue,
+                    int alpha, int maxValue) throws IllegalArgumentException {
     if (maxValue <= 0
             || red < 0 || green < 0 || blue < 0 || alpha < 0
             || red > maxValue || green > maxValue || blue > maxValue || alpha > maxValue) {

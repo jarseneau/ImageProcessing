@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * This class represents a grayscale operation based on the luma of the pixel
+ * done with color transformation.
+ */
 public class GrayscaleLumaTransformation extends AColorTransformationAdjustor {
 
   @Override
