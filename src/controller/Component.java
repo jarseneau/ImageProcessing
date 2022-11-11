@@ -31,6 +31,7 @@ public class Component extends AbstractImageCommand {
   @Override
   public void go() {
     try {
+      c.writeMessage("Gray-scaling " + name1 + " and storing as: " + name2);
       //put new model into the images map.
       images.put(name2, images.get(name1).apply(new GrayscaleAdjustor(this.component)));
     }

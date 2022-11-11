@@ -7,6 +7,27 @@ Interface: ImageProcessingController
 Class: ConsoleController
     An implementation of our controller interface to operate in the console
 ------------------------------
+VERSION 2.0:
+// we modified the controller because our switch statement was growing quickly with each
+// additional functionality that was added, so we refactored it to use command classes
+// to apply the command to an image.
+
+Interface: ImageCommand
+    An interface to represent any command that the controller can run on an image
+
+Abstract Class: AbstractImageCommand
+    Represents an image command that can be run by the controller
+    Subclass: HFlip     -> horizontally flips an image and maps result to new name
+    Subclass: VFlip     -> vertically flips an image and maps result to new name
+    Subclass: Brighten  -> brightens or darkens an image and maps result to new name
+    Subclass: Load      -> loads an image and places it in the controllers name to image map
+    Subclass: Save      -> saves an image to the filename specified
+    Subclass: Component -> gray-scales an image by the component and maps result to new name
+    Subclass: Luma      -> gray-scales an image by luma and maps result to new name
+    Subclass: Blur      -> blurs an image and maps result to new name
+    Subclass: Sharpen   -> sharpens an image and maps result to new name
+    Subclass: Sepia     -> applies sepia filter to every pixel in image and maps result to new name
+------------------------------
 Interface: IImageAdjustor
     An interface that promises the adjust method for any type of adjustment
 
@@ -47,6 +68,8 @@ Class: RGBPixel
     channels with alpha always being 255 as well as value, intensity, and luma.
 
 VERSION 2:
+// We created a new pixel class because we realized pngs will have alpha channels
+// and must be represented in some way
 Class: AlphaPixel
     Represents an RGB pixel with an alpha channel that is significant in its
     representation.

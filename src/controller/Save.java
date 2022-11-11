@@ -28,7 +28,7 @@ public class Save extends AbstractImageCommand {
       c.trySave(name1, name2);
 
     } catch (NullPointerException e) {
-      c.writeMessage("Error: image " + name1 + "not yet loaded");
+      c.writeMessage("Error: image " + name1 + " not yet loaded");
     }
   }
 }

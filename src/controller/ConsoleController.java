@@ -6,12 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Function;
 
-import model.BrightenAdjustor;
-import model.FlipHorizontalAdjustor;
-import model.FlipVerticalAdjustor;
-import model.GrayscaleAdjustor;
 import model.ImageProcessingModel;
-import model.PPMProcessingModel;
 import view.ImageProcessingView;
 
 /**
@@ -24,10 +19,10 @@ import view.ImageProcessingView;
  */
 public class ConsoleController implements ImageProcessingController {
 
-  private Readable readable;
-  private Map<String, ImageProcessingModel> images;
-  private Map<String, Function<Scanner, ImageCommand>> knownCommands;
-  private ImageProcessingView view;
+  private final Readable readable;
+  private final Map<String, ImageProcessingModel> images;
+  private final Map<String, Function<Scanner, ImageCommand>> knownCommands;
+  private final ImageProcessingView view;
 
   /**
    * Create a controller with an empty map of models, readable (to take inputs)
@@ -113,14 +108,17 @@ public class ConsoleController implements ImageProcessingController {
       } else if (userInstruction.equals("menu")) {
         printMenu();
       } else {
-        Function<Scanner, ImageCommand> cmd =
-                knownCommands.getOrDefault(userInstruction, null);
-        if (cmd == null) {
-          writeMessage("Error: command " + userInstruction + " not found.");
-        }
-        else {
-          c = cmd.apply(sc);
-          c.go();
+        try {
+          Function<Scanner, ImageCommand> cmd =
+                  knownCommands.getOrDefault(userInstruction, null);
+          if (cmd == null) {
+            writeMessage("Error: command " + userInstruction + " not found.");
+          } else {
+            c = cmd.apply(sc);
+            c.go();
+          }
+        } catch (InputMismatchException e) {
+          writeMessage("Incorrect arguments for given command found, try again.");
         }
       }
     }
@@ -128,113 +126,6 @@ public class ConsoleController implements ImageProcessingController {
     //after the user has quit, print farewell message
     this.farewellMessage();
 
-  }
-
-  // processes the given image command. If the command is not supported
-  private void processCommand(String userInstruction, Scanner sc) {
-    String name1;
-    String name2;
-    String response = "Successful!";
-    if (userInstruction.contains("component")) {
-      String component = userInstruction.substring(0,userInstruction.indexOf("-"));
-      name1 = sc.next(); //name1 = image-name
-      name2 = sc.next(); //name2 = dest-image-name
-      writeMessage("Gray-scaling " + name1 + " by its " + component + " component and storing as: "
-              + name2);
-      tryGrayscale(name1, name2, component);
-    }
-
-    else {
-      switch (userInstruction) {
-        case "load": //load given image path
-          try {
-            name1 = sc.next();
-            name2 = sc.next();
-            writeMessage("Loading image at " + name1 + " as " + name2);
-            ImageProcessingModel model = new PPMProcessingModel(name1); //Too specific for future
-            images.put(name2, model);
-          } catch (IllegalArgumentException e) {
-            response = "Error: " + e.getMessage();
-          }
-          break;
-
-        case "save": // name1 = filepath, name2 = image-name
-          try {
-            name1 = sc.next();
-            name2 = sc.next();
-            try {
-              writeMessage("Saving " + name2 + " to: " + name1);
-              view.save(name1, images.get(name2));
-
-            } catch (NullPointerException e) {
-              response = "Error: image " + name1 + "not yet loaded";
-            }
-          } catch (IllegalArgumentException e) {
-            response = "Error " + e.getMessage();
-          }
-          break;
-
-        case "horizontal-flip":
-          name1 = sc.next(); //name1 = image-name
-          name2 = sc.next(); //name2 = dest-image-name
-          try {
-            writeMessage("Flipping " + name1 + " horizontally and storing as: " + name2);
-            images.put(name2, images.get(name1).apply(new FlipHorizontalAdjustor()));
-          } catch (NullPointerException e) {
-            response = "Error: image " + name1 + " not yet loaded";
-          }
-          break;
-
-        case "vertical-flip":
-          name1 = sc.next(); //name1 = image-name
-          name2 = sc.next(); //name2 = dest-image-name
-          try {
-            writeMessage("Flipping " + name1 + " vertically and storing as: " + name2);
-            images.put(name2, images.get(name1).apply(new FlipVerticalAdjustor()));
-          } catch (NullPointerException e) {
-            response = "Error: image " + name1 + " not yet loaded";
-          }
-          break;
-
-        case "brighten":
-          int increment;
-          try {
-            increment = sc.nextInt();
-            name1 = sc.next(); //name1 = image-name
-            name2 = sc.next(); //name2 = dest-image-name
-            try {
-              writeMessage("Brightening " + name1 + " by "
-                      + increment + " and storing as: " + name2);
-              images.put(name2, images.get(name1).apply(new BrightenAdjustor(increment)));
-            } catch (NullPointerException e) {
-              response = "Error: image " + name1 + " not yet loaded";
-            }
-          }
-          catch (InputMismatchException e) {
-            response = "Error: brighten needs an integer increment";
-            sc.next();
-            sc.next();
-          }
-          break;
-        default:
-          response = "Error: command " + userInstruction + " not found.";
-      }
-    }
-    writeMessage(response);
-  }
-
-  // a method to grayscale by a given component (red, green, blue, value, intensity, luma)
-  private void tryGrayscale(String name1, String name2, String component) {
-    try {
-      //put new model into the images map.
-      images.put(name2, images.get(name1).apply(new GrayscaleAdjustor(component)));
-    }
-    catch (NullPointerException e) {
-      writeMessage("Image " + name1 + " not yet loaded");
-    }
-    catch (IllegalArgumentException e) {
-      writeMessage("Error: " + e.getMessage());
-    }
   }
 
   //outputs the farewell message to the view
@@ -251,12 +142,19 @@ public class ConsoleController implements ImageProcessingController {
   // outputs the menu of all operations into the view
   private void printMenu() {
     writeMessage("Supported operations are:");
-    writeMessage("\tload image-path image-name");
-    writeMessage("\tsave image-path image-name");
+    writeMessage("\tload file-path image-name");
+    writeMessage("\tsave file-path image-name");
     writeMessage("\tred-component image-path image-name " +
             "(same for green, blue, value, luma and intensity)");
     writeMessage("\thorizontal-flip image-path image-name");
     writeMessage("\tvertical-flip image-path image-name");
+    writeMessage("\tbrighten int-scalar image-path image-name");
+    writeMessage("\tblur image-path image-name");
+    writeMessage("\tsharpen image-path image-name");
+    writeMessage("\tsepia image-path image-name");
+    writeMessage("\tluma image-path image-name");
+    writeMessage("Where image-path is the name of the image as its saved and" +
+            " image-name is the new name of the result");
     writeMessage("\"q\" or \"quit\" to quit");
     writeMessage("\"menu\" to see this menu again");
   }

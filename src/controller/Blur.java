@@ -27,7 +27,7 @@ public class Blur extends AbstractImageCommand {
   @Override
   public void go() {
     try {
-      c.writeMessage("Blurring " + name1 + "and storing as: " + name2);
+      c.writeMessage("Blurring " + name1 + " and storing as: " + name2);
       images.put(name2, images.get(name1).apply(new BlurFilteringAdjustor()));
     } catch (NullPointerException e) {
       c.writeMessage("Error: image " + name1 + " not yet loaded");

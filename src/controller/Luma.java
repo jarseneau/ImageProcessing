@@ -27,7 +27,7 @@ public class Luma extends AbstractImageCommand {
   @Override
   public void go() {
     try {
-      c.writeMessage("Flipping " + name1 + " vertically and storing as: " + name2);
+      c.writeMessage("Gray-scaling " + name1 + " by luma and storing as: " + name2);
       images.put(name2, images.get(name1).apply(new GrayscaleLumaTransformation()));
     } catch (NullPointerException e) {
       c.writeMessage("Error: image " + name1 + " not yet loaded");

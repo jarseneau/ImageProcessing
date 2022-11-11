@@ -1,0 +1,17 @@
+load Koala.ppm koala
+brighten -40 koala darkKoala
+vertical-flip koala vFlipKoala
+save res/darkKoala.ppm darkKoala
+red-component vFlipKoala vFlipKoala-red
+blue-component vFlipKoala vFlipKoala-blue
+green-component vFlipKoala vFlipKoala-green
+value-component vFlipKoala vFlipKoala-value
+intensity-component vFlipKoala vFlipKoala-intensity
+luma-component vFlipKoala vFlipKoala-luma
+load res/lerner.png lerner
+blur lerner blurred_lerner
+sharpen lerner sharp_lerner
+luma lerner gray_lerner
+sepia lerner sepia_lerner
+save res/sepia_lerner.jpg sepia_lerner
+q

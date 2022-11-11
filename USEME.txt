@@ -1,0 +1,54 @@
+Supported operations are:
+
+load file-path image-name (must be run before attempting to edit an image)
+	Examples:
+        load Koala.ppm koala
+        load new_york.png new_york
+
+save file-path image-name
+    Examples:
+        save koala.ppm koala
+        save new_york.png new_york
+
+red-component image-path image-name (same for green, blue, value, luma and intensity)
+    Examples:
+        red-component koala gray_koala
+        green-component koala gray_koala
+        blue-component koala gray_koala
+        value-component koala gray_koala
+        intensity-component koala gray_koala
+        luma-component koala gray_koala
+
+horizontal-flip image-path image-name
+    Example:
+        horizontal-flip koala flipped_koala
+
+vertical-flip image-path image-name
+    Example:
+        vertical-flip koala flipped_koala
+
+brighten int-scalar image-path image-name
+    Examples:
+        brighten 100 koala bright_koala
+        brighten -100 koala dark_koala
+
+blur image-path image-name
+    Example:
+        blur koala blurry_koala
+
+sharpen image-path image-name
+    Example:
+        sharpen koala sharp_koala
+
+sepia image-path image-name
+    Example:
+        sepia koala sepia_koala
+
+luma image-path image-name
+    Example:
+        luma koala gray_koala
+
+Where image-path is the name of the image as its saved and image-name is the new name of the result
+
+"q" or "quit" to quit
+"menu" to pull up menu

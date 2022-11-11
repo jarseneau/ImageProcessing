@@ -21,15 +21,21 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestConsoleController {
   static final String welcome = "Welcome to the Image Processing program\n";
-  static final String menu =
-          "Supported operations are:\n" +
-          "\tload image-path image-name\n" +
-          "\tsave image-path image-name\n" +
+  static final String menu = "Supported operations are:\n" +
+          "\tload file-path image-name\n" +
+          "\tsave file-path image-name\n"+
           "\tred-component image-path image-name " +
-                  "(same for green, blue, value, luma and intensity)\n" +
+                       "(same for green, blue, value, luma and intensity)\n" +
           "\thorizontal-flip image-path image-name\n" +
           "\tvertical-flip image-path image-name\n" +
-          "\"q\" or \"quit\" to quit\n" +
+          "\tbrighten int-scalar image-path image-name\n" +
+          "\tblur image-path image-name\n" +
+          "\tsharpen image-path image-name\n" +
+          "\tsepia image-path image-name\n" +
+          "\tluma image-path image-name\n" +
+          "Where image-path is the name of the image as its saved and" +
+                       " image-name is the new name of the result\n"
+          + "\"q\" or \"quit\" to quit\n" +
           "\"menu\" to see this menu again\n";
   static final String farewell = "Have a nice day!\n";
 
