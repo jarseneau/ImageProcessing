@@ -11,7 +11,7 @@ import model.ImageProcessingModel;
  */
 public class Component extends AbstractImageCommand {
 
-  String component;
+  private String component;
 
   /**
    * Constructor for Component, handles field setting.

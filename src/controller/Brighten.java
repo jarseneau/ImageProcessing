@@ -10,7 +10,7 @@ import model.ImageProcessingModel;
  * store it in the images map with the new name.
  */
 public class Brighten extends AbstractImageCommand {
-  int increment;
+  private int increment;
 
   /**
    * Constructor for Brighten, handles field setting.

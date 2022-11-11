@@ -118,6 +118,74 @@ public class TestConsoleController {
   }
 
   @Test
+  public void testBlur() { //Test controller is sending right info to model
+    StringBuilder out = new StringBuilder();
+    ImageProcessingView view = new PPMImageView(out);
+    Readable input = new StringReader("blur mock blurMock");
+    StringBuilder log = new StringBuilder();
+    MockModel mock = new MockModel(log);
+    Map<String, ImageProcessingModel> map = new HashMap<>();
+    map.put("mock", mock);
+    ImageProcessingController controller = new ConsoleController(input, view, map);
+    controller.control();
+
+    String expectedLog = "model.BlurFilteringAdjustor is being called\n";
+
+    assertEquals(expectedLog, mock.getLog().toString());
+  }
+
+  @Test
+  public void testSepia() { //Test controller is sending right info to model
+    StringBuilder out = new StringBuilder();
+    ImageProcessingView view = new PPMImageView(out);
+    Readable input = new StringReader("sepia mock sepiaMock");
+    StringBuilder log = new StringBuilder();
+    MockModel mock = new MockModel(log);
+    Map<String, ImageProcessingModel> map = new HashMap<>();
+    map.put("mock", mock);
+    ImageProcessingController controller = new ConsoleController(input, view, map);
+    controller.control();
+
+    String expectedLog = "model.SepiaTransformation is being called\n";
+
+    assertEquals(expectedLog, mock.getLog().toString());
+  }
+
+  @Test
+  public void testSharpen() { //Test controller is sending right info to model
+    StringBuilder out = new StringBuilder();
+    ImageProcessingView view = new PPMImageView(out);
+    Readable input = new StringReader("sharpen mock sharpMock");
+    StringBuilder log = new StringBuilder();
+    MockModel mock = new MockModel(log);
+    Map<String, ImageProcessingModel> map = new HashMap<>();
+    map.put("mock", mock);
+    ImageProcessingController controller = new ConsoleController(input, view, map);
+    controller.control();
+
+    String expectedLog = "model.SharpenFilteringAdjustor is being called\n";
+
+    assertEquals(expectedLog, mock.getLog().toString());
+  }
+
+  @Test
+  public void testGrayscaleLuma() { //Test controller is sending right info to model
+    StringBuilder out = new StringBuilder();
+    ImageProcessingView view = new PPMImageView(out);
+    Readable input = new StringReader("luma mock lumaMock");
+    StringBuilder log = new StringBuilder();
+    MockModel mock = new MockModel(log);
+    Map<String, ImageProcessingModel> map = new HashMap<>();
+    map.put("mock", mock);
+    ImageProcessingController controller = new ConsoleController(input, view, map);
+    controller.control();
+
+    String expectedLog = "model.GrayscaleLumaTransformation is being called\n";
+
+    assertEquals(expectedLog, mock.getLog().toString());
+  }
+
+  @Test
   public void testHFlip() { //Test controller is sending right info to model
     StringBuilder out = new StringBuilder();
     ImageProcessingView view = new PPMImageView(out);
