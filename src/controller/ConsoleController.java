@@ -55,8 +55,6 @@ public class ConsoleController implements ImageProcessingController {
     this.images = map;
     this.view = view;
 
-
-
     this.knownCommands = new HashMap<>();
     knownCommands.put("load", s -> new Load(s.next(), s.next(), images, this));
     knownCommands.put("save", s -> new Save(s.next(), s.next(), images, this));
