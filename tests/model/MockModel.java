@@ -47,6 +47,11 @@ public class MockModel implements ImageProcessingModel {
     return this;
   }
 
+  @Override
+  public int[][] histogram() {
+    return new int[0][];
+  }
+
   /**
    * A method to observe the log of this mock model.
    * @return this log

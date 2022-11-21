@@ -27,10 +27,13 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
   private JList<String> listOfStrings;
   private ImageProcessingFeatures features;
 
-  public ImageGUIView() throws IOException {
+  private ImageProcessingModel model;
+
+  public ImageGUIView(ImageProcessingModel model) throws IOException {
     super();
+    this.model = model;
     setTitle("GUI VIEW");
-    setPreferredSize(new Dimension(1400, 1000));
+    setPreferredSize(new Dimension(1000, 800));
     this.setBackground(Color.WHITE);
     this.setLayout(new BorderLayout());
     this.mainPanel = new JPanel();
@@ -52,18 +55,38 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
 
     this.histogramColPanel = new JPanel();
     histogramColPanel.setLayout(new BoxLayout(histogramColPanel, BoxLayout.Y_AXIS));
-    //columnPanel.add(histogramColPanel);
+    columnPanel.add(histogramColPanel);
+
+
+    int[][] histogram = model.histogram();
+    JPanel redHistogram = new BarChart(histogram[0], Color.red);
+    histogramColPanel.add(redHistogram);
+
+    JPanel greenHistogram = new BarChart(histogram[1], Color.green);
+    histogramColPanel.add(greenHistogram);
+
+    JPanel blueHistogram = new BarChart(histogram[2], Color.blue);
+    histogramColPanel.add(blueHistogram);
+
+    JPanel intensityHistogram = new BarChart(histogram[3], Color.black);
+    histogramColPanel.add(intensityHistogram);
+
+
+
+
+
+
 
     imageLabel = new JLabel();
     scrollPane = new JScrollPane(imageLabel);
-    scrollPane.setPreferredSize(new Dimension(960, 800));
+    scrollPane.setPreferredSize(new Dimension(600, 400));
     imageColPanel.add(scrollPane);
 
     //dialog boxes
     JPanel dialogBoxesPanel = new JPanel();
     dialogBoxesPanel.setBorder(BorderFactory.createTitledBorder("Load and Save"));
     dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
-    dialogBoxesPanel.setPreferredSize(new Dimension(960, 200));
+    dialogBoxesPanel.setPreferredSize(new Dimension(600, 200));
     imageColPanel.add(dialogBoxesPanel);
 
     //file open

@@ -48,6 +48,4 @@ public class ImageIOProcessingModel extends AImageFromFileProcessing {
   protected int getMaxFromFile(String fileName) throws IllegalArgumentException {
     return 255;
   }
-
-
 }

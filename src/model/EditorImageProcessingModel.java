@@ -63,4 +63,20 @@ public class EditorImageProcessingModel implements ImageProcessingModel {
     Objects.requireNonNull(adjustor);
     return adjustor.adjust(this);
   }
+
+  @Override
+  public int[][] histogram() {
+    int[][] h = new int[4][256];
+
+    for (IPixel[] row : pixels) {
+      for (IPixel p : row) {
+        h[0][p.getChannel("red")] += 1;
+        h[1][p.getChannel("green")] += 1;
+        h[2][p.getChannel("blue")] += 1;
+        h[3][p.getChannel("intensity")] += 1;
+      }
+    }
+
+    return h;
+  }
 }
