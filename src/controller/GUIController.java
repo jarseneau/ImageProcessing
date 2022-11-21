@@ -35,6 +35,7 @@ public class GUIController implements ImageProcessingFeatures {
 
     buttonClickedMap.put("Open file", new LoadButtonAction());
     buttonClickedMap.put("Save file", new SaveButtonAction());
+    buttonClickedMap.put("Close", new CloseAction());
 
     Map<String, Runnable> filterButtonClickedMap = new HashMap<>();
 
@@ -141,6 +142,12 @@ public class GUIController implements ImageProcessingFeatures {
     public void run() {
       model = model.apply(new SepiaTransformation());
       view.updateImage(model);
+    }
+  }
+
+  static class CloseAction implements Runnable {
+    public void run() {
+      System.exit(0);
     }
   }
 }

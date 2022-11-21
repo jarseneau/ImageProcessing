@@ -22,6 +22,7 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
   private JPanel histogramColPanel;
   private final JButton fileOpenButton;
   private final JButton fileSaveButton;
+  private final JButton closeButton;
   private JButton[] filters;
 
   public ImageGUIView() throws IOException {
@@ -41,6 +42,13 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
     this.filterColPanel = new JPanel();
     filterColPanel.setLayout(new BoxLayout(filterColPanel, BoxLayout.Y_AXIS));
     columnPanel.add(filterColPanel);
+    JPanel closePanel = new JPanel();
+    closeButton = new JButton("Close Application");
+    closeButton.setActionCommand("Close");
+    closePanel.add(closeButton);
+    closePanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+    filterColPanel.add(closePanel);
+
 
     // add image and saving column
     this.imageColPanel = new JPanel();
@@ -131,6 +139,7 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
   public void addActionListener(ActionListener listener) {
     fileOpenButton.addActionListener(listener);
     fileSaveButton.addActionListener(listener);
+    closeButton.addActionListener(listener);
     for (JButton button: filters) {
       button.addActionListener(listener);
     }
