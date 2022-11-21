@@ -8,7 +8,7 @@ import controller.GUIController;
 import controller.ImageProcessingFeatures;
 import model.ImageProcessingModel;
 
-public interface ImageProcessingRenderedView extends ImageProcessingView {
+public interface ImageProcessingRenderedView {
   /**
    * Adds the list of commands provided to the list of options.
    */
@@ -19,12 +19,6 @@ public interface ImageProcessingRenderedView extends ImageProcessingView {
    * @param listener the listener to be added
    */
   void addActionListener(ActionListener listener);
-
-  /**
-   * Adds list listener to the view for the selection list.
-   * @param listener the listener to be added
-   */
-  void addListListener(ListSelectionListener listener);
 
   /**
    * Presents the user with the load file dialog and

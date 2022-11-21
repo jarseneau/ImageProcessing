@@ -1,13 +1,10 @@
 package view;
 
-import controller.ImageProcessingFeatures;
 import model.ImageProcessingModel;
 
 import java.awt.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.event.ActionListener;
@@ -22,17 +19,13 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
   private final JPanel columnPanel;
   private final JPanel imageColPanel;
   private final JPanel filterColPanel;
-  private final JPanel histogramColPanel;
+  private JPanel histogramColPanel;
   private final JButton fileOpenButton;
   private final JButton fileSaveButton;
   private JButton[] filters;
-  private JList<String> listOfStrings;
 
-  private ImageProcessingModel model;
-
-  public ImageGUIView(ImageProcessingModel model) throws IOException {
+  public ImageGUIView() throws IOException {
     super();
-    this.model = model;
     setTitle("GUI VIEW");
     setPreferredSize(new Dimension(1000, 800));
     this.setBackground(Color.WHITE);
@@ -57,26 +50,6 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
     this.histogramColPanel = new JPanel();
     histogramColPanel.setLayout(new BoxLayout(histogramColPanel, BoxLayout.Y_AXIS));
     columnPanel.add(histogramColPanel);
-
-
-    int[][] histogram = model.histogram();
-    JPanel redHistogram = new BarChart(histogram[0], Color.red);
-    histogramColPanel.add(redHistogram);
-
-    JPanel greenHistogram = new BarChart(histogram[1], Color.green);
-    histogramColPanel.add(greenHistogram);
-
-    JPanel blueHistogram = new BarChart(histogram[2], Color.blue);
-    histogramColPanel.add(blueHistogram);
-
-    JPanel intensityHistogram = new BarChart(histogram[3], Color.black);
-    histogramColPanel.add(intensityHistogram);
-
-
-
-
-
-
 
     imageLabel = new JLabel();
     imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -112,15 +85,27 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
     setVisible(true);
   }
 
-  @Override
-  public void save(String filename, ImageProcessingModel model) throws IllegalStateException,
-          NullPointerException {
+  /**
+   * Renders a histogram representing the image with bar charts of each
+   * color component
+   *
+   * @param model the image to be rendered
+   */
+  private void renderHistogram(ImageProcessingModel model) {
+    histogramColPanel.removeAll();
 
-  }
+    int[][] histogram = model.histogram();
+    JPanel redHistogram = new BarChart(histogram[0], Color.red);
+    histogramColPanel.add(redHistogram);
 
-  @Override
-  public void renderMessage(String message) throws NullPointerException {
-    // something to do with sending a warning message -> only need messages for errors now
+    JPanel greenHistogram = new BarChart(histogram[1], Color.green);
+    histogramColPanel.add(greenHistogram);
+
+    JPanel blueHistogram = new BarChart(histogram[2], Color.blue);
+    histogramColPanel.add(blueHistogram);
+
+    JPanel intensityHistogram = new BarChart(histogram[3], Color.black);
+    histogramColPanel.add(intensityHistogram);
   }
 
   @Override
@@ -149,11 +134,6 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
     for (JButton button: filters) {
       button.addActionListener(listener);
     }
-  }
-
-  @Override
-  public void addListListener(ListSelectionListener listener) {
-    listOfStrings.addListSelectionListener(listener);
   }
 
   @Override
@@ -195,6 +175,7 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
       }
     }
     imageLabel.setIcon(new ImageIcon(image));
+    this.renderHistogram(model);
     this.revalidate();
     this.repaint();
   }
