@@ -98,6 +98,4 @@ public class PPMProcessingModel extends AImageFromFileProcessing {
               " there is text where there shouldn't be.");
     }
   }
-
-
 }

@@ -60,4 +60,9 @@ public abstract class AImageFromFileProcessing implements ImageProcessingModel {
   public ImageProcessingModel apply(IImageAdjustor adjustor) throws NullPointerException {
     return editor.apply(adjustor);
   }
+
+  @Override
+  public int[][] histogram() {
+    return editor.histogram();
+  }
 }

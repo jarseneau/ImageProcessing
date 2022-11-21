@@ -46,4 +46,9 @@ public interface ImageProcessingModel {
    * @throws NullPointerException if the given adjustor is null
    */
   ImageProcessingModel apply(IImageAdjustor adjustor) throws NullPointerException;
+
+  /**
+   * Returns a histogram of the given color within the image that this model represents.
+   */
+  int[][] histogram();
 }
