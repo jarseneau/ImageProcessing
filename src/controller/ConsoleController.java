@@ -158,11 +158,13 @@ public class ConsoleController implements ImageProcessingController {
   }
 
   // sends messages to view, handles errors.
-  protected void writeMessage(String message) throws IllegalStateException {
+  @Override
+  public void writeMessage(String message) throws IllegalStateException {
     view.renderMessage(message);
   }
 
-  protected void trySave(String name1, String name2) {
+  @Override
+  public void trySave(String name1, String name2) {
     this.view.save(name1, images.get(name2));
   }
 }

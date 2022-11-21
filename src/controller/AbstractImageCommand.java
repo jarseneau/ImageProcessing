@@ -13,7 +13,7 @@ public abstract class AbstractImageCommand implements ImageCommand {
   protected String name1;
   protected String name2;
   protected Map<String, ImageProcessingModel> images;
-  protected ConsoleController c;
+  protected ImageProcessingController c;
 
   /**
    * Constructor for AbstractImageCommand, handles field setting for the command.
@@ -23,7 +23,7 @@ public abstract class AbstractImageCommand implements ImageCommand {
    * @param c the controller to send information back to.
    */
   AbstractImageCommand(String name1, String name2, Map<String, ImageProcessingModel> images,
-                       ConsoleController c) {
+                       ImageProcessingController c) {
     this.name1 = name1;
     this.name2 = name2;
     this.images = images;

@@ -10,4 +10,14 @@ public interface ImageProcessingController {
    * @throws IllegalStateException if the controller is unable to transmit output
    */
   void control() throws IllegalStateException;
+
+  /**
+   * Writes the given message to the view.
+   */
+  void writeMessage(String message) throws IllegalStateException;
+
+  /**
+   * Tries to save the given image.
+   */
+  void trySave(String name1, String name2);
 }
