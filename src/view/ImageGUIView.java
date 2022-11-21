@@ -7,6 +7,7 @@ import java.awt.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.event.ActionListener;
@@ -24,8 +25,8 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
   private final JPanel histogramColPanel;
   private final JButton fileOpenButton;
   private final JButton fileSaveButton;
+  private JButton[] filters;
   private JList<String> listOfStrings;
-  private ImageProcessingFeatures features;
 
   public ImageGUIView() throws IOException {
     super();
@@ -55,6 +56,8 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
     //columnPanel.add(histogramColPanel);
 
     imageLabel = new JLabel();
+    imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    imageLabel.setAlignmentY(Component.TOP_ALIGNMENT);
     scrollPane = new JScrollPane(imageLabel);
     scrollPane.setPreferredSize(new Dimension(960, 800));
     imageColPanel.add(scrollPane);
@@ -98,42 +101,36 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
   }
 
   @Override
-  public void render(ImageProcessingModel m) {
-
-  }
-
-  @Override
   public void addCommands(String[] commands) {
-    // filter selection list
-    JPanel selectionListPanel = new JPanel();
-    selectionListPanel.setBorder(BorderFactory.createTitledBorder("Selection lists"));
-    selectionListPanel.setLayout(new BoxLayout(selectionListPanel, BoxLayout.X_AXIS));
-    selectionListPanel.setPreferredSize(new Dimension(300, 500));
-    filterColPanel.add(selectionListPanel);
+    JPanel filterButtonPanel = new JPanel();
+    filterButtonPanel.setBorder(BorderFactory.createTitledBorder("Filters to Apply"));
+    filterButtonPanel.setLayout(new FlowLayout());
+    filterButtonPanel.setPreferredSize(new Dimension(300, 500));
+    filterColPanel.add(filterButtonPanel);
+    filters = new JButton[commands.length];
 
-    DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
-    for (String com: commands) {
-      dataForListOfStrings.addElement(com);
+    for (int i = 0; i < commands.length; i++) {
+      filters[i] = new JButton(commands[i]);
+      filters[i].setActionCommand(commands[i]);
+      filterButtonPanel.add(filters[i]);
     }
-
-    listOfStrings = new JList<>(dataForListOfStrings);
-    listOfStrings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    JScrollPane listScroll = new JScrollPane(listOfStrings);
-    selectionListPanel.add(listScroll);
 
     this.revalidate();
     this.repaint();
   }
 
   @Override
-  public void addFeatures(ImageProcessingFeatures features) {
-    this.features = features;
-  }
-
-  @Override
   public void addActionListener(ActionListener listener) {
     fileOpenButton.addActionListener(listener);
     fileSaveButton.addActionListener(listener);
+    for (JButton button: filters) {
+      button.addActionListener(listener);
+    }
+  }
+
+  @Override
+  public void addListListener(ListSelectionListener listener) {
+    listOfStrings.addListSelectionListener(listener);
   }
 
   @Override
@@ -177,5 +174,18 @@ public class ImageGUIView extends JFrame implements ImageProcessingRenderedView 
     imageLabel.setIcon(new ImageIcon(image));
     this.revalidate();
     this.repaint();
+  }
+
+  @Override
+  public String queryUser(String message) {
+    return JOptionPane.showInputDialog(message);
+  }
+
+  @Override
+  public void sendError(String errorMessage) {
+    JOptionPane.showMessageDialog(ImageGUIView.this,
+            errorMessage,
+            "Error!",
+            JOptionPane.PLAIN_MESSAGE);
   }
 }

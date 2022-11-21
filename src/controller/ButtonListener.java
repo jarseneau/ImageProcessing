@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 
 public class ButtonListener implements ActionListener {
-  Map<String, Runnable> buttonClickedActions;
+  private Map<String, Runnable> buttonClickedActions;
 
   /**
    * Empty default constructor
@@ -14,17 +14,21 @@ public class ButtonListener implements ActionListener {
   }
 
   /**
-   * Set the map for key typed events. Key typed events in Java Swing are characters
+   * Set the map for button events.
    */
 
-  public void setButtonClickedActionMap(Map<String,Runnable> map) {
+  public void setButtonClickedActionMap(Map<String, Runnable> map) {
     buttonClickedActions = map;
   }
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    if (buttonClickedActions.containsKey(e.getActionCommand())) {
-      buttonClickedActions.get(e.getActionCommand()).run();
+    try {
+      if (buttonClickedActions.containsKey(e.getActionCommand())) {
+        buttonClickedActions.get(e.getActionCommand()).run();
+      }
+    } catch (NullPointerException n) {
+      // do nothing
     }
   }
 }

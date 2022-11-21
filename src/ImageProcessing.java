@@ -20,9 +20,8 @@ public class ImageProcessing {
    */
   public static void main(String[] args) {
     try {
-      ImageProcessingModel m = new ImageIOProcessingModel("res/lerner.png");
       ImageProcessingRenderedView v = new ImageGUIView();
-      ImageProcessingFeatures c = new GUIController(m, v);
+      ImageProcessingFeatures c = new GUIController(null, v);
     } catch (IOException e) {
       throw new IllegalStateException("uh oh");
     }
